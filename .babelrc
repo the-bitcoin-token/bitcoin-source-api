@@ -1,0 +1,20 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "esmodules": true
+        }
+      }
+    ],
+    [
+      "@babel/preset-flow"
+    ],
+  ],
+  "plugins": [
+    ["minify-mangle-names", {
+      "topLevel": true
+    }]
+  ]
+}
