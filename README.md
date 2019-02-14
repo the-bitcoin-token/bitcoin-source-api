@@ -4,7 +4,7 @@ Public rest APIs for networks supported by bitcoin-source
 
 ## Installation
 
--   clone repo: `git clone https://github.com/brentongunning/bitcoin-source-api.git`
+-   clone repo: `git clone https://github.com/the-bitcoin-token/bitcoin-source-api.git`
 -   move to folder: `cd bitcoin-source-api`
 -   install: `npm install`
 
