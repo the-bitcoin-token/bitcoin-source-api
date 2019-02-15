@@ -13,7 +13,14 @@ import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 
 const { Address, Transaction } = BitcoinSource
 
+/**
+ * Default BCH mainnet insight node url
+ */
 export const BCH_BLOCKDOZER_MAINNET_URL = 'https://bch.blockdozer.com/api'
+
+/**
+ * Default BCH testnet insight node url
+ */
 export const BCH_BLOCKDOZER_TESTNET_URL = 'https://tbch.blockdozer.com/api'
 
 /**
@@ -23,6 +30,10 @@ export const BCH_BLOCKDOZER_TESTNET_URL = 'https://tbch.blockdozer.com/api'
 export class BchInsightApi implements Api {
   _url: string
 
+  /**
+   * Creates an Api for a BCH insight node
+   * @param {string} url Insight API URL
+   */
   constructor(url: string) {
     this._url = url
   }

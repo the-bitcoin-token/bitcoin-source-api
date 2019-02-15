@@ -56,6 +56,8 @@ should be present, flow's cache is likely out of date. Run `npx flow stop`.
         -   [Parameters](#parameters-5)
     -   [getTxo](#gettxo)
         -   [Parameters](#parameters-6)
+-   [BCH_BLOCKDOZER_MAINNET_URL](#bch_blockdozer_mainnet_url)
+-   [BCH_BLOCKDOZER_TESTNET_URL](#bch_blockdozer_testnet_url)
 -   [BchInsightApi](#bchinsightapi)
     -   [Parameters](#parameters-7)
 -   [ApiError](#apierror)
@@ -188,13 +190,25 @@ Gets a transaction output given an output id.
 
 -   Throws **[ApiError](#apierror)** if the request cannot be completed.
 
+### BCH_BLOCKDOZER_MAINNET_URL
+
+Default BCH mainnet insight node url
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+### BCH_BLOCKDOZER_TESTNET_URL
+
+Default BCH testnet insight node url
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
 ### BchInsightApi
 
 API for BCH Insight nodes
 
 #### Parameters
 
--   `url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Insight API URL
 
 ### ApiError
 
