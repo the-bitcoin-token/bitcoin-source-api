@@ -3,10 +3,6 @@
 // $FlowFixMe
 import RestClient from '../src'
 
-declare var describe: any
-declare var it: any
-declare var expect: any
-
 describe('exports', () => {
   it('Tests each export is present', () => {
     expect(RestClient).toBeDefined()

@@ -3,10 +3,6 @@
 // $FlowFixMe
 import RestClient from '../src'
 
-declare var describe: any
-declare var it: any
-declare var expect: any
-
 describe('removeDuplicates', () => {
   // This test started failing for misterious reasons - to be revisited
   it('should remove duplicatesd from a list of utxos', async () => {

@@ -4,14 +4,10 @@
 import { Address, Block } from 'bitcoinsource'
 import RestClient from '../../src'
 
-declare var describe: any
-declare var it: any
-declare var expect: any
-
 const TEST_ADDRESS = new Address('my9uLPBr38a4ayEkaZfcaiQArwTzYSho3y')
 
 describe('RestClient', () => {
-  describe('getAddress', async () => {
+  describe('getAddress', () => {
     it('Should retrieve information about the test address', async () => {
       const res = await RestClient.getAddress(TEST_ADDRESS)
       expect(res).toBeDefined()
@@ -20,7 +16,7 @@ describe('RestClient', () => {
     })
   })
 
-  describe('getBalance', async () => {
+  describe('getBalance', () => {
     it('Should retrieve the balance of the test address', async () => {
       const res = await RestClient.getBalance(TEST_ADDRESS)
       expect(res).toBeDefined()
@@ -28,7 +24,7 @@ describe('RestClient', () => {
     })
   })
 
-  describe('getBlock', async () => {
+  describe('getBlock', () => {
     it('Should retrieve the block for a given block hash', async () => {
       const hash =
         '000000000000024814d19116110a8924450852316e47f3d0e668c800bcc77f0c'
@@ -46,14 +42,14 @@ describe('RestClient', () => {
     })
   })
 
-  describe('getLastBlockHash', async () => {
+  describe('getLastBlockHash', () => {
     it('Should retrieve the latest block for a given block hash', async () => {
       const res = await RestClient.getLastBlockHash()
       expect(res).toBeDefined()
     })
   })
 
-  describe('getRawBlock', async () => {
+  describe('getRawBlock', () => {
     it('Should retrieve the raw block for a given block hash', async () => {
       const res = await RestClient.getRawBlock(
         '000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943'
@@ -84,7 +80,7 @@ describe('RestClient', () => {
     })
   })
 
-  describe('getTransaction', async () => {
+  describe('getTransaction', () => {
     it('Should retrieve the transaction for a given id', async () => {
       const txId =
         '82dcd699b019c90f9a77f1002a006d7fccb242fa7e85f9273b33b7e49544749f'
@@ -94,7 +90,7 @@ describe('RestClient', () => {
     })
   })
 
-  describe('getRawTransaction', async () => {
+  describe('getRawTransaction', () => {
     it('Should retrieve the raw transaction for a given block id', async () => {
       const txId =
         '82dcd699b019c90f9a77f1002a006d7fccb242fa7e85f9273b33b7e49544749f'
@@ -103,7 +99,7 @@ describe('RestClient', () => {
     })
   })
 
-  describe('getUtxos', async () => {
+  describe('getUtxos', () => {
     it('Should retrieve the utxo set of the first test address', async () => {
       const res = await RestClient.getUtxos(TEST_ADDRESS)
       expect(res).toBeDefined()
@@ -118,7 +114,7 @@ describe('RestClient', () => {
     })
   })
 
-  describe('getTxo', async () => {
+  describe('getTxo', () => {
     it('Should return a txo', async () => {
       const outputId = {
         txId:
@@ -144,7 +140,7 @@ describe('RestClient', () => {
   /*
   TODO: Setup private keys
 
-  describe('sendTransaction', async () => {
+  describe('sendTransaction', () => {
     it('Should build and broadcast a transaction', async () => {
       const wallet = new Wallet(getTestMnemonic())
       const address = wallet.getAddress()
