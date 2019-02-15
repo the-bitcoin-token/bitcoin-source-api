@@ -1,6 +1,5 @@
 // @flow
 
-// $FlowFixMe
 import { Address, Block } from 'bitcoinsource'
 import RestClient from '../../src'
 

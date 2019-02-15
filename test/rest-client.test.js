@@ -1,6 +1,5 @@
 // @flow
 
-// $FlowFixMe
 import RestClient from '../src'
 
 describe('removeDuplicates', () => {
