@@ -41,17 +41,31 @@ should be present, flow's cache is likely out of date. Run `npx flow stop`.
 -   [getAddress](#getaddress)
 -   [getBalance](#getbalance)
 -   [sendTransaction](#sendtransaction)
--   [getUtxos](#getutxos)
--   [BchInsightApi](#bchinsightapi)
+-   [getBlock](#getblock)
     -   [Parameters](#parameters)
--   [ApiError](#apierror)
+-   [getBlockHash](#getblockhash)
     -   [Parameters](#parameters-1)
--   [unwrapAxiosResponse](#unwrapaxiosresponse)
+-   [getLastBlockHash](#getlastblockhash)
+-   [getRawBlock](#getrawblock)
     -   [Parameters](#parameters-2)
--   [renameProperty](#renameproperty)
+-   [getTransaction](#gettransaction)
     -   [Parameters](#parameters-3)
--   [removeDuplicates](#removeduplicates)
+-   [getRawTransaction](#getrawtransaction)
     -   [Parameters](#parameters-4)
+-   [getUtxos](#getutxos)
+    -   [Parameters](#parameters-5)
+-   [getTxo](#gettxo)
+    -   [Parameters](#parameters-6)
+-   [BchInsightApi](#bchinsightapi)
+    -   [Parameters](#parameters-7)
+-   [ApiError](#apierror)
+    -   [Parameters](#parameters-8)
+-   [unwrapAxiosResponse](#unwrapaxiosresponse)
+    -   [Parameters](#parameters-9)
+-   [renameProperty](#renameproperty)
+    -   [Parameters](#parameters-10)
+-   [removeDuplicates](#removeduplicates)
+    -   [Parameters](#parameters-11)
 
 ### Api
 
@@ -73,29 +87,106 @@ Rest API interface that all supported chains must implement
 
 ### getAddress
 
-Retrieves the given address' history.
+Retrieves a given address' history.
 
--   Throws **any** a [ApiError](#apierror) if the request cannot be completed.
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
 
 ### getBalance
 
-Retrieves the given address' balance in satoshis.
+Retrieves a given address' balance in satoshis.
 
--   Throws **any** a [ApiError](#apierror) if the request cannot be completed.
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
 
 ### sendTransaction
 
-Sends a transaction for broadcasting
+Sends a transaction for broadcasting.
 
--   Throws **any** a [ApiError](#apierror) if the request cannot be completed.
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
 
 Returns **any** the resulting transaction id
 
+### getBlock
+
+Retrieves a block from its hash or height.
+
+#### Parameters
+
+-   `hashOrHeight` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** Hash or height of the block
+
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
+
+### getBlockHash
+
+Retrieves the hash of a block from its height.
+
+#### Parameters
+
+-   `height` **any** Block height
+
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
+
+### getLastBlockHash
+
+Retrives the hash of the latest block.
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
+
+### getRawBlock
+
+Retrives a hex-formatted block given its hash or height.
+
+#### Parameters
+
+-   `hashOrHeight` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** Hash or height of the block
+
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
+
+### getTransaction
+
+Retrieves a JSON-formatted transaction from its hash
+
+#### Parameters
+
+-   `txId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Transaction hash
+
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
+
+### getRawTransaction
+
+Retrieves a hex-formatted transaction given its hash
+
+#### Parameters
+
+-   `txId` **any** Transaction hash
+
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
+
 ### getUtxos
 
-Retrieves the given address' unspent outputs (UTXO set).
+Retrieves a given address' unspent outputs (UTXO set).
 
--   Throws **any** a [ApiError](#apierror) if the request cannot be completed.
+#### Parameters
+
+-   `address` **Address** Address whose UTXOs to retrieve
+
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
+
+### getTxo
+
+Gets a transaction output given an output id.
+
+#### Parameters
+
+-   `outputId` **OutputId** Transaction id and output index
+
+
+-   Throws **[ApiError](#apierror)** if the request cannot be completed.
 
 ### BchInsightApi
 
