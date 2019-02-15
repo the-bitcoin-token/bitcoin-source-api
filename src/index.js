@@ -1,6 +1,9 @@
 // @flow
 
-import { Api } from './api'
-import * as RestClient from './rest-client'
+import {
+  BchInsightApi,
+  BCH_BLOCKDOZER_MAINNET_URL,
+  BCH_BLOCKDOZER_TESTNET_URL
+} from './bch'
 
-export { Api, RestClient }
+export { BchInsightApi, BCH_BLOCKDOZER_MAINNET_URL, BCH_BLOCKDOZER_TESTNET_URL }
