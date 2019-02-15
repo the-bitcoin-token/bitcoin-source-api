@@ -1,7 +1,7 @@
 // @flow
 
 import { Address, Block } from 'bitcoinsource'
-import RestClient from '../../src'
+import { RestClient } from '../../src'
 
 const TEST_ADDRESS = new Address('my9uLPBr38a4ayEkaZfcaiQArwTzYSho3y')
 

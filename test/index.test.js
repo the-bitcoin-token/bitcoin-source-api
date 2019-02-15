@@ -1,6 +1,6 @@
 // @flow
 
-import RestClient from '../src'
+import { RestClient } from '../src'
 
 describe('exports', () => {
   it('Tests each export is present', () => {
