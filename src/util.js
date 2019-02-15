@@ -1,6 +1,6 @@
 // @flow
 
-import BitcoinSourceApiError from './error'
+import ApiError from './error'
 
 function axiosToApiError(error) {
   if (error.response) {
@@ -18,22 +18,19 @@ headers\t${headers}
 message\t${message}
 request\t${method} ${url}${requestData ? `\ndata\t${requestData}` : ''}`
 
-    return new BitcoinSourceApiError('Server error', details)
+    return new ApiError('Server error', details)
   } else if (error.request) {
-    return new BitcoinSourceApiError(
-      'Communication error',
-      'Service unavailable'
-    )
+    return new ApiError('Communication error', 'Service unavailable')
   }
-  return new BitcoinSourceApiError('Request error', error.message)
+  return new ApiError('Request error', error.message)
 }
 
 /**
  * Executes an axios request and unwraps either the resulting response or error.
- * Throws a {@link BitcoinSourceApiError} if communication with the server fails or if the
+ * Throws a {@link ApiError} if communication with the server fails or if the
  * request results in an error status code.
  *
- * @throws {BitcoinSourceApiError}
+ * @throws {ApiError}
  */
 export const unwrapAxiosResponse = async (
   request: Promise<any>

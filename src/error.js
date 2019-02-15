@@ -5,7 +5,7 @@
  *
  * @author Brenton Gunning
  */
-export default class BitcoinSourceApiError extends Error {
+export default class ApiError extends Error {
   constructor(title, detail, ...params) {
     super(...params)
     this.name = 'Error'
@@ -13,7 +13,7 @@ export default class BitcoinSourceApiError extends Error {
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, BitcoinSourceApiError)
+      Error.captureStackTrace(this, ApiError)
     }
   }
 }

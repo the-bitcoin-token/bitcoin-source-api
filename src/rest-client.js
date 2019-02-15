@@ -6,7 +6,7 @@
 
 import axios from 'axios'
 import BitcoinSource from 'bitcoinsource'
-import BitcoinSourceApiError from './error'
+import ApiError from './error'
 import type { OutputId, TransactionId, Txo } from './types'
 import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 
@@ -20,10 +20,10 @@ const BLOCK_EXPLORER_URL =
     : 'https://bch.blockdozer.com/api'
 
 /**
- * Executes a get request to the given route. Throws a {@link BitcoinSourceApiError} if the
+ * Executes a get request to the given route. Throws a {@link ApiError} if the
  * request or the communication fails.
  *
- * @throws {BitcoinSourceApiError}
+ * @throws {ApiError}
  */
 export const _get = async (
   route: string,
@@ -32,10 +32,10 @@ export const _get = async (
 
 /**
  * Executes a post request to the given route with the given data as body.
- * Throws a {@link BitcoinSourceApiError} if the request or the communication fails.
+ * Throws a {@link ApiError} if the request or the communication fails.
  *
  * @returns {*}
- * @throws {BitcoinSourceApiError}
+ * @throws {ApiError}
  */
 export const _post = async (
   route: string,
@@ -46,19 +46,19 @@ export const _post = async (
 /* ---- Blockchain Api ---- */
 
 /**
- * Retrieves the given address' history, or throws a {@link BitcoinSourceApiError} if the
+ * Retrieves the given address' history, or throws a {@link ApiError} if the
  * request cannot be completed.
  *
- * @throws {BitcoinSourceApiError}
+ * @throws {ApiError}
  */
 export const getAddress = async (address: Address): Promise<Object> =>
   _get(`/addr/${address.toString()}`)
 
 /**
  * Retrieves the given address' balance in satoshis, or throws a
- * {@link BitcoinSourceApiError} if the request cannot be completed.
+ * {@link ApiError} if the request cannot be completed.
  *
- * @throws {BitcoinSourceApiError}
+ * @throws {ApiError}
  */
 export const getBalance = async (address: Address): Promise<number> => {
   const { balanceSat, unconfirmedBalanceSat } = await getAddress(address)
@@ -67,10 +67,10 @@ export const getBalance = async (address: Address): Promise<number> => {
 
 /**
  * Sends a raw, hex-encoded transaction for broadcasting. Returns the resulting
- * transaction's id, or throws a {@link BitcoinSourceApiError} if the request cannot be
+ * transaction's id, or throws a {@link ApiError} if the request cannot be
  * completed.
  *
- * @throws {BitcoinSourceApiError}
+ * @throws {ApiError}
  */
 export const sendTransaction = async (
   transaction: Transaction
@@ -126,9 +126,9 @@ export const getRawTransaction = async (txId: string): Promise<Object> => {
 
 /**
  * Retrieves the given address' unspent outputs(UTXO set), or throws a
- * {@link BitcoinSourceApiError} if the request cannot be completed.
+ * {@link ApiError} if the request cannot be completed.
  *
- * @throws {BitcoinSourceApiError}
+ * @throws {ApiError}
  */
 export const getUtxos = async (address: Address): Promise<Array<Txo>> => {
   const addressString = address.toString()
