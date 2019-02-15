@@ -18,6 +18,7 @@ export const BCH_BLOCKDOZER_TESTNET_URL = 'https://tbch.blockdozer.com/api'
 
 /**
  * API for BCH Insight nodes
+ * @implements {Api}
  */
 export class BchInsightApi implements Api {
   _url: string
