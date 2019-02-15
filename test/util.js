@@ -1,6 +1,6 @@
 // @flow
 
-import RestClient from '../src'
+import { removeDuplicates } from '../src/util'
 
 describe('removeDuplicates', () => {
   // This test started failing for misterious reasons - to be revisited
@@ -47,7 +47,7 @@ describe('removeDuplicates', () => {
         satoshis: 1500
       }
     ]
-    const res = RestClient.removeDuplicates(utxos)
+    const res = removeDuplicates(utxos)
     expect(res.length).toBe(3)
   })
 })

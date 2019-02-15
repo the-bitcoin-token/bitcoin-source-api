@@ -7,7 +7,8 @@
 import axios from 'axios'
 import BitcoinSource from 'bitcoinsource'
 import BitcoinSourceApiError from './error'
-import type { OutputId, Txo, TransactionId } from './types'
+import type { OutputId, TransactionId, Txo } from './types'
+import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 
 const { Address, Transaction } = BitcoinSource
 
@@ -19,51 +20,6 @@ const BLOCK_EXPLORER_URL =
     : 'https://bch.blockdozer.com/api'
 
 /**
- * Executes an axios request and unwraps either the resulting response or error.
- * Throws a {@link BitcoinSourceApiError} if communication with the server fails or if the
- * request results in an error status code.
- *
- * @throws {BitcoinSourceApiError}
- */
-export const _unwrap = async (request: Promise<any>): Promise<any> => {
-  try {
-    const response = await request
-    return response.data
-  } catch (error) {
-    if (error.response) {
-      const { status, statusText, data } = error.response
-      const { method, url } = error.response.config || {
-        method: 'unknown',
-        url: 'unknown'
-      }
-      const requestData = error.response.config.data
-      const message =
-        data.error || (data.indexOf('Code:') !== -1 ? data : statusText)
-      throw new BitcoinSourceApiError(`
-Communication Error
-
-status\t${status} ${statusText}
-message\t${message}
-request\t${method} ${url}${requestData ? `\ndata\t${requestData}` : ''}`)
-    } else {
-      throw new BitcoinSourceApiError(
-        'Communication error',
-        'Service unavailable.'
-      )
-    }
-  }
-}
-
-function renameProp(
-  oldProp: string,
-  newProp: string,
-  // $FlowFixMe
-  { [oldProp]: old, ...others }: Object
-) {
-  return { [newProp]: old, ...others }
-}
-
-/**
  * Executes a get request to the given route. Throws a {@link BitcoinSourceApiError} if the
  * request or the communication fails.
  *
@@ -72,7 +28,7 @@ function renameProp(
 export const _get = async (
   route: string,
   baseUrl: string = BLOCK_EXPLORER_URL
-): Promise<any> => _unwrap(axios.get(`${baseUrl}${route}`))
+): Promise<any> => unwrapAxiosResponse(axios.get(`${baseUrl}${route}`))
 
 /**
  * Executes a post request to the given route with the given data as body.
@@ -85,7 +41,7 @@ export const _post = async (
   route: string,
   data: Object,
   baseUrl: string = BLOCK_EXPLORER_URL
-): Promise<any> => _unwrap(axios.post(`${baseUrl}${route}`, data))
+): Promise<any> => unwrapAxiosResponse(axios.post(`${baseUrl}${route}`, data))
 
 /* ---- Blockchain Api ---- */
 
@@ -120,17 +76,8 @@ export const sendTransaction = async (
   transaction: Transaction
 ): Promise<TransactionId> => {
   const res = await _post('/tx/send', { rawtx: transaction.toString() })
-  return renameProp('txid', 'txId', res)
+  return renameProperty('txid', 'txId', res)
 }
-
-/**
- * Removes duplicates from an array of utxos
- */
-export const removeDuplicates = (array: Array<any>): Array<any> =>
-  array.filter(
-    (el, index, self) =>
-      self.findIndex(t => t.txId === el.txId && t.vout === el.vout) === index
-  )
 
 async function hashOrHeightToHash(
   hashOrHeight: string | number
@@ -186,7 +133,7 @@ export const getRawTransaction = async (txId: string): Promise<Object> => {
 export const getUtxos = async (address: Address): Promise<Array<Txo>> => {
   const addressString = address.toString()
   const explorerUtxos = await _get(`/addr/${addressString}/utxo`)
-  const utxos = explorerUtxos.map(utxo => renameProp('txid', 'txId', utxo))
+  const utxos = explorerUtxos.map(utxo => renameProperty('txid', 'txId', utxo))
 
   // the insight api might return a list with duplicates we need to eliminate
   const deDuplicatedUtxso = removeDuplicates(utxos)
