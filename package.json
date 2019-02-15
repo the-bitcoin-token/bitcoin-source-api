@@ -3,7 +3,7 @@
   "version": "0.1.0-alpha.0",
   "description": "Bitcoin Source API",
   "license": "UNLICENSED",
-  "repository": "brentongunning/bitcoin-source-api",
+  "repository": "the-bitcoin-token/bitcoin-source-api",
   "main": "src/index.js",
   "module": "src/index.js",
   "author": {
