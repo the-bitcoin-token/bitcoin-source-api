@@ -4,7 +4,7 @@
   "description": "Bitcoin Source API",
   "license": "UNLICENSED",
   "repository": "the-bitcoin-token/bitcoin-source-api",
-  "main": "src/index.js",
+  "main": "dist/bitcoin-source-api-umd.js",
   "module": "src/index.js",
   "author": {
     "name": "Brenton Gunning",
