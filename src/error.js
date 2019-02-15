@@ -2,8 +2,6 @@
 
 /**
  * A custom Error class to get better stack traces.
- *
- * @author Brenton Gunning
  */
 export default class ApiError extends Error {
   constructor(title, detail, ...params) {

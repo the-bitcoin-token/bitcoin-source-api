@@ -29,8 +29,8 @@ request\t${method} ${url}${requestData ? `\ndata\t${requestData}` : ''}`
  * Executes an axios request and unwraps either the resulting response or error.
  * Throws a {@link ApiError} if communication with the server fails or if the
  * request results in an error status code.
- *
  * @throws {ApiError}
+ * @ignore
  */
 export const unwrapAxiosResponse = async (
   request: Promise<any>
@@ -50,6 +50,7 @@ export const unwrapAxiosResponse = async (
  * @param {string} newProp New property name
  * @param {string} object Object to mutate
  * @returns {Object} The object with the renamed keys
+ * @ignore
  */
 export function renameProperty(
   oldProperty: string,
@@ -62,6 +63,7 @@ export function renameProperty(
 
 /**
  * Removes duplicates from an array of utxos
+ * @ignore
  */
 export const removeDuplicates = (array: Array<any>): Array<any> =>
   array.filter(
