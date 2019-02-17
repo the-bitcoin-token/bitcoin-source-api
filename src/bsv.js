@@ -5,13 +5,11 @@
 /* eslint no-param-reassign: "off" */
 
 import axios from 'axios'
-import BitcoinSource from 'bitcoinsource'
+import { Address, Transaction } from 'bitcoinsource'
 import { Api } from './api'
 import ApiError from './error'
 import type { OutputId, TransactionId, Txo } from './types'
 import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
-
-const { Address, Transaction } = BitcoinSource
 
 /**
  * Default BSV mainnet insight node url
