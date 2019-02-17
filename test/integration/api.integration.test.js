@@ -196,12 +196,12 @@ TEST_APIS.forEach(({
       })
     })
 
-    //TODO: I don't think the BSV method returns the right information!
     describe('getUtxos', () => {
       it('Should retrieve the utxo set of the first test address', async () => {
         const res = await api.getUtxos(testAddress)
         expect(res).toBeDefined()
         expect(res.length).toBeGreaterThan(0)
+        expect(res[0].spent).toBe(false)
         expect(res[0].address).toBeDefined()
         expect(res[0].txId).toBeDefined()
         expect(res[0].vout).toBeDefined()
