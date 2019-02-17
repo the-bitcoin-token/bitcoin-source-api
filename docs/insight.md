@@ -11,7 +11,7 @@ bitcoin-source-api uses the following insight methods.
 |getAddress     |GET |/addr/    |/addr/{address}           |
 |getUtxos       |GET |/addr     | /addr/{address}/utxo |
 |getBlock       |GET |/block    |/block/{hash}            |
-|getBlockHash   |GET |/block-index/| //block-index/{height}
+|getBlockHash   |GET |/block-index| /block-index/{height}
 |getLastBlockHash |GET |/status   |/status?q=getLastBlockHash|
 |getRawBlock    |GET |/rawblock |/rawblock/{hash}         |
 |getTransaction |GET |/tx       | /tx/{txId} |
