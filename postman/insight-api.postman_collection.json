@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "a0ab0cbc-5ace-49d1-9470-ccff1ca2038b",
+		"name": "insight-api",
+		"description": "A collection of requests that tests the insight API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAddress",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f7280473-2ca4-44a0-8936-5aecd580f775",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const jsonData = pm.response.json()",
+							"",
+							"const schema = {",
+							"    \"required\": [\"addrStr\"],",
+							"    \"properties\": {",
+							"      \"addrStr\": { \"type\": \"string\" }",
+							"    }",
+							"}",
+							"",
+							"pm.test('getAddress response is valid', function() {",
+							"    const valid = tv4.validate(jsonData, schema, false, false)",
+							"    if (valid !== true) {",
+							"      console.log(tv4.error)",
+							"    }",
+							"    pm.expect(valid).to.be.true",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d940dc3d-715b-4c1c-a168-cf42eca89095",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/addr/{{address}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"addr",
+						"{{address}}"
+					]
+				},
+				"description": "Gets Transactions for an address"
+			},
+			"response": []
+		},
+		{
+			"name": "getUtxos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0879e973-6a65-4c2c-8cc1-a53dd9b915b2",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const jsonData = pm.response.json()",
+							"",
+							"const schema = {",
+							"    \"type\": \"array\",",
+							"    \"items\": {",
+							"        \"required\": [\"address\"],",
+							"        \"properties\": {",
+							"          \"address\": { \"type\": \"string\" },",
+							"          \"txid\": { \"type\": \"string\" },",
+							"          \"vout\": { \"type\": \"number\" },",
+							"          \"scriptPubKey\": { \"type\": \"string\" },",
+							"          \"amount\": { \"type\": \"number\" },",
+							"          \"satoshis\": { \"type\": \"number\" },",
+							"          \"height\": { \"type\": \"number\" },",
+							"          \"confirmations\": { \"type\": \"number\" }",
+							"        }",
+							"    }",
+							"}",
+							"",
+							"pm.test('getUtxos response is valid', function() {",
+							"    const valid = tv4.validate(jsonData, schema, false, true)",
+							"    if (valid !== true) {",
+							"      console.log(tv4.error)",
+							"    }",
+							"    pm.expect(valid).to.be.true",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/addr/{{address}}/utxo",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"addr",
+						"{{address}}",
+						"utxo"
+					]
+				},
+				"description": "Gets UTXOs for an address"
+			},
+			"response": []
+		},
+		{
+			"name": "getBlock",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6241e20-02a9-470c-a5c5-4f222029daeb",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const jsonData = pm.response.json()",
+							"",
+							"const schema = {",
+							"    \"required\": [\"hash\"],",
+							"    \"properties\": {",
+							"      \"hash\": { \"type\": \"string\" },",
+							"      \"height\": { \"type\": \"number\" }",
+							"    }",
+							"}",
+							"",
+							"pm.test('getBlock response is valid', function() {",
+							"    const valid = tv4.validate(jsonData, schema, false, false)",
+							"    if (valid !== true) {",
+							"      console.log(tv4.error)",
+							"    }",
+							"    pm.expect(valid).to.be.true",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/block/{{blockHash}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"block",
+						"{{blockHash}}"
+					]
+				},
+				"description": "Gets a block from a block hash"
+			},
+			"response": []
+		},
+		{
+			"name": "getBlockHash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d1a963ff-57d0-4fa1-9dd8-4f3119b420ab",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"const schema = {",
+							"    \"required\": [\"blockHash\"],",
+							"    \"properties\": {",
+							"      \"blockHash\": {",
+							"        \"type\": \"string\"",
+							"      }",
+							"    }",
+							"}",
+							"",
+							"pm.test('getBlockHash response is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema, false, true)).to.be.true;",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/block-index/{{height}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"block-index",
+						"{{height}}"
+					]
+				},
+				"description": "Gets a block hash from block height"
+			},
+			"response": []
+		},
+		{
+			"name": "getLastBlockHash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b39be59-db93-4044-9e4b-265a5b0bd0ee",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"const schema = {",
+							"    \"required\": [\"lastblockhash\"],",
+							"    \"properties\": {",
+							"      \"lastblockhash\": { \"type\": \"string\" },",
+							"      \"syncTipHash\": { \"type\": \"string\" }",
+							"    }",
+							"}",
+							"",
+							"pm.test('getBlockHash response is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema, false, true)).to.be.true;",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/status?q=getLastBlockHash",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"status"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "getLastBlockHash"
+						}
+					]
+				},
+				"description": "Gets the block hash of the latest known block"
+			},
+			"response": []
+		},
+		{
+			"name": "getTransaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac0398c8-5338-457a-9e8f-13d04dae19f7",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const jsonData = pm.response.json()",
+							"",
+							"const schema = {",
+							"    \"required\": [\"txid\",\"vin\",\"vout\"]",
+							"}",
+							"",
+							"pm.test('getTransaction response is valid', function() {",
+							"    const valid = tv4.validate(jsonData, schema, false, false)",
+							"    if (valid !== true) {",
+							"      console.log(tv4.error)",
+							"    }",
+							"    pm.expect(valid).to.be.true",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/tx/{{txId}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"tx",
+						"{{txId}}"
+					]
+				},
+				"description": "Gets a Transaction in JSON format"
+			},
+			"response": []
+		},
+		{
+			"name": "getRawTransaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f37f43d1-1ea7-4d5d-926c-75a6ea2df045",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const jsonData = pm.response.json()",
+							"",
+							"",
+							"const schema = {",
+							"    \"required\": [\"rawtx\"],",
+							"    \"properties\": {",
+							"      \"rawtx\": {",
+							"        \"type\": \"string\"",
+							"      }",
+							"    }",
+							"}",
+							"",
+							"pm.test('getRawTransaction response is valid', function() {",
+							"    const valid = tv4.validate(jsonData, schema, false, false)",
+							"    if (valid !== true) {",
+							"      console.log(tv4.error)",
+							"    }",
+							"    pm.expect(valid).to.be.true",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/rawtx/{{txId}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rawtx",
+						"{{txId}}"
+					]
+				},
+				"description": "Gets a Transaction raw hex"
+			},
+			"response": []
+		},
+		{
+			"name": "getRawBlock",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ebccdd8-20b7-46a3-a317-a685fb1ca058",
+						"exec": [
+							"//this endpoint is disabled on some bsv explorers",
+							"const coin = pm.environment.get(\"coin\")",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(coin === 'BSV' ? 404 : 200)",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/rawblock/{{blockHash}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rawblock",
+						"{{blockHash}}"
+					]
+				},
+				"description": "Gets the raw hex of a block"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "09febd97-664e-4c65-839f-2295c543b40a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3656a12a-a8a3-4464-aa07-70d8c8034be7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "805b926c-581d-41c6-998f-a42bff1b9b17",
+			"key": "address",
+			"value": "1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1",
+			"type": "string"
+		},
+		{
+			"id": "da554f1b-08c4-4d14-baa9-f3d8f58ce8d3",
+			"key": "blockHash",
+			"value": "0000000000000000029b61e34346ea1b18df249c1c0d0ed8c73edde31f8ad50e",
+			"type": "string"
+		},
+		{
+			"id": "ef295199-1f26-4848-8d07-55dd00e9c9b4",
+			"key": "height",
+			"value": "500000",
+			"type": "string"
+		},
+		{
+			"id": "d48c0fd1-a71f-47e0-a0b3-b6b844693ddf",
+			"key": "txId",
+			"value": "766a4a171acaea360823d6feeb020c899ed582c12e8919bbe7610ade47b51e9b",
+			"type": "string"
+		}
+	]
+}
