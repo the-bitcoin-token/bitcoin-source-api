@@ -7,7 +7,7 @@ export const testdata = [
     name: 'BCH Testnet',
     network: 'testnet',
     mnemonic: 'rail install size scorpion orchard kingdom vacuum collect pencil element fall enhance media island medal',
-    skipTests: ['sendTransaction'],
+    skipTests: [],
     api: new BchInsightApi(BCH_BLOCKDOZER_TESTNET_URL),
     testAddress: new Address('my9uLPBr38a4ayEkaZfcaiQArwTzYSho3y'),
     addressCountMinimum: 900,
