@@ -5,9 +5,9 @@ import { BchInsightApi, BCH_BLOCKDOZER_TESTNET_URL, BCH_BLOCKDOZER_MAINNET_URL }
 import { BsvInsightApi, BSV_TESTNET_URL, BSV_MAINNET_URL } from '../../src'
 import { testdata } from './testdata'
 
-//TODO: code review
 testdata.forEach(({ 
-    name, network, mnemonic, api, testAddress, txId, genesisBlockHash, genesisBlockContents,
+    name, network, skipTests, mnemonic, api, testAddress, txId, 
+    genesisBlockHash, genesisBlockContents,
     getBlockHash, getRawBlockHash, getRawBlockContents, addressCountMinimum,
     txOutput }) => {
   describe(name, () => {
@@ -63,32 +63,32 @@ testdata.forEach(({
       })
     })
 
-    //TODO: not working on bsv because depends on rawblock
-    describe('getRawBlock', () => {
-      it.skip('Should retrieve the raw block for a given block hash', async () => {
-        const res = await api.getRawBlock(getRawBlockHash)
-        expect(res).toBeDefined()
-        expect(res.indexOf(' ')).toBe(-1)
-        expect(res).toBe(getRawBlockContents)
-      })
+    if ((typeof skipTests === "undefined") || (skipTests.indexOf('getRawBlock') === -1)) {
+      describe('getRawBlock', () => {
+        it('Should retrieve the raw block for a given block hash', async () => {
+          const res = await api.getRawBlock(getRawBlockHash)
+          expect(res).toBeDefined()
+          expect(res.indexOf(' ')).toBe(-1)
+          expect(res).toBe(getRawBlockContents)
+        })
 
-      it.skip('Should retrieve the block for a given block height', async () => {
-        const res = await api.getRawBlock(1)
-        expect(res).toBeDefined()
-        expect(res.indexOf(' ')).toBe(-1)
-        expect(res).toBe(genesisBlockContents)
-      })
+        it('Should retrieve the block for a given block height', async () => {
+          const res = await api.getRawBlock(1)
+          expect(res).toBeDefined()
+          expect(res.indexOf(' ')).toBe(-1)
+          expect(res).toBe(genesisBlockContents)
+        })
 
-      //TODO: not working on bsv because depends on rawblock
-      it.skip('Should parse a block to JSON', async () => {
-        const res = await api.getRawBlock(getRawBlockHash)
-        const blockBuf = Buffer.from(res, 'hex')
-        const block = Block.fromBuffer(blockBuf)
-        expect(block).toBeDefined()
-        expect(block.header).toBeDefined()
-        expect(block.transactions).toBeDefined()
+        it('Should parse a block to JSON', async () => {
+          const res = await api.getRawBlock(getRawBlockHash)
+          const blockBuf = Buffer.from(res, 'hex')
+          const block = Block.fromBuffer(blockBuf)
+          expect(block).toBeDefined()
+          expect(block.header).toBeDefined()
+          expect(block.transactions).toBeDefined()
+        })
       })
-    })
+    }
 
     describe('getTransaction', () => {
       it('Should retrieve the transaction json for a given id', async () => {
@@ -157,18 +157,14 @@ testdata.forEach(({
       })
     })
 
-    //todo: code review
-    if (mnemonic) {
+    if (mnemonic && (typeof skipTests === "undefined" || skipTests.indexOf('sendTransaction') === -1 )) {
       describe('sendTransaction', () => {
         it('Should build and broadcast a transaction', async () => {
           const hdPrivateKey = Mnemonic(mnemonic).toHDPrivateKey()
           const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
           const address = derived.publicKey.toAddress(network)
-          //mvZa3E4GsfYBtGxiyuRrFha7CDPpWziEZS from "m/44'/0'/0'/0/1/0"
-          //mr5DbotZmtZqCeu3sGxcdj3NbaMiPdQXq8 from "m/44'/0'/0'/1/0"
           const amount = Transaction.DUST_AMOUNT * 2
           const fee = Transaction.FEE_SECURITY_MARGIN
-          //todo, wallet.getUtxos, filter by amount+fee
           const utxos = (await api.getUtxos(address)).map(u => (
             { txId: u.txId, outputIndex: u.vout, address: u.address, 
             script: u.scriptPubKey, satoshis: u.satoshis })
@@ -176,9 +172,7 @@ testdata.forEach(({
 
           const transaction = new Transaction()
             .from(utxos)
-          //why split outputs?
             .to(address, amount)
-          //transaction.addOutput(address, amount / 2)
             .change(address)
             .sign(derived.privateKey)
 

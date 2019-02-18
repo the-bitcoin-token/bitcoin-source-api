@@ -14,9 +14,7 @@ import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 /**
  * Default BSV mainnet insight node url
  */
-//api is not yet standard, everything inside a data key
-export const BSV_MAINNET_BITINDEX_URL = 'https://www.bitindex.network/'
-//bchsvexplorer very close to standard insight but missing /rawblock
+//export const BSV_MAINNET_BITINDEX_URL = 'https://www.bitindex.network/api/v3'
 export const BSV_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
 /**
@@ -84,24 +82,16 @@ export class BsvInsightApi implements Api {
 
   async getRawBlock(hashOrHeight: string | number): Promise<string> {
     const hash = await this._hashOrHeightToHash(hashOrHeight)
-    //seems rawblock is not supported yet on any bsv explorer
-    //closes seems to be https://bsv-chain.api.btc.com/v3/block/3
     const blockInfo = await this._get(`/rawblock/${hash}`)
     return blockInfo.rawblock
   }
 
-  //TODO: code review. is adding async here ok?
-  async getTransaction(txId: string): Promise<Object> {
-    //raw tx for bchsvexplorer
-    const transactionInfo = await this._get(`/tx/${txId}`)
-    //add .data for bitindex
-    return transactionInfo
+  getTransaction(txId: string): Promise<Object> {
+    return this._get(`/tx/${txId}`)
   }
 
   async getRawTransaction(txId: string): Promise<Object> {
-    //rawtx for bchsvexplorer, tx for bitindex
     const transactionInfo = await this._get(`/rawtx/${txId}`)
-    //rawtx for bchsvexplorer, .data.hex for bitindex
     return transactionInfo.rawtx
   }
 
