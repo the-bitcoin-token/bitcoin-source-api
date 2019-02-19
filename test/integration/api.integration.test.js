@@ -4,6 +4,7 @@ import { Address, Block, Mnemonic, Transaction } from 'bitcoinsource'
 import { BchInsightApi, BCH_BLOCKDOZER_TESTNET_URL, BCH_BLOCKDOZER_MAINNET_URL } from '../../src'
 import { BsvInsightApi, BSV_TESTNET_URL, BSV_MAINNET_URL } from '../../src'
 import { testdata } from './testdata'
+import { renameProperty } from '../../src/util'
 
 testdata.forEach(({ 
     name, network, skipTests, mnemonic, api, testAddress, txId, 
@@ -165,9 +166,8 @@ testdata.forEach(({
           const address = derived.publicKey.toAddress(network)
           const amount = Transaction.DUST_AMOUNT * 2
           const fee = Transaction.FEE_SECURITY_MARGIN
-          const utxos = (await api.getUtxos(address)).map(u => (
-            { txId: u.txId, outputIndex: u.vout, address: u.address, 
-            script: u.scriptPubKey, satoshis: u.satoshis })
+          const utxos = (await api.getUtxos(address)).map(u => 
+            renameProperty('vout', 'outputIndex', renameProperty('script', 'scriptPubKey', u))
           )
 
           const transaction = new Transaction()
