@@ -16,7 +16,7 @@ describe('renameProperty', () => {
 })
 
 describe('removeDuplicates', () => {
-  // This test started failing for misterious reasons - to be revisited
+  // This test started failing for mysterious reasons - to be revisited
   it('should remove duplicatesd from a list of utxos', async () => {
     const utxos = [
       {
