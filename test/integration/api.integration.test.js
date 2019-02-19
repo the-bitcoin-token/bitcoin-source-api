@@ -64,7 +64,7 @@ testdata.forEach(({
       })
     })
 
-    if ((typeof skipTests === "undefined") || (skipTests.indexOf('getRawBlock') === -1)) {
+    if ((typeof skipTests === "undefined") || !skipTests.includes('getRawBlock')) {
       describe('getRawBlock', () => {
         it('Should retrieve the raw block for a given block hash', async () => {
           const res = await api.getRawBlock(getRawBlockHash)
@@ -158,13 +158,13 @@ testdata.forEach(({
       })
     })
 
-    if (mnemonic && (typeof skipTests === "undefined" || skipTests.indexOf('sendTransaction') === -1 )) {
+    if (mnemonic && (typeof skipTests === "undefined" || !skipTests.includes('sendTransaction'))) {
       describe('sendTransaction', () => {
         it('Should build and broadcast a transaction', async () => {
           const hdPrivateKey = Mnemonic(mnemonic).toHDPrivateKey()
           const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
           const address = derived.publicKey.toAddress(network)
-          const amount = Transaction.DUST_AMOUNT * 2
+          const amount = Transaction.DUST_AMOUNT
           const fee = Transaction.FEE_SECURITY_MARGIN
           const utxos = (await api.getUtxos(address)).map(u => 
             renameProperty('vout', 'outputIndex', renameProperty('script', 'scriptPubKey', u))
