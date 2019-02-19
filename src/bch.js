@@ -4,14 +4,12 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 
-import axios from 'axios'
-import BitcoinSource from 'bitcoinsource'
+import { Address, Transaction } from 'bitcoinsource'
 import { Api } from './api'
+import { ApiBase } from './apibase'
 import ApiError from './error'
 import type { OutputId, TransactionId, Txo } from './types'
-import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
-
-const { Address, Transaction } = BitcoinSource
+import { removeDuplicates, renameProperty } from './util'
 
 /**
  * Default BCH mainnet insight node url
@@ -27,30 +25,7 @@ export const BCH_BLOCKDOZER_TESTNET_URL = 'https://tbch.blockdozer.com/api'
  * API for BCH Insight nodes
  * @param {string} url Insight API URL
  */
-export class BchInsightApi implements Api {
-  _url: string
-
-  constructor(url: string) {
-    this._url = url
-  }
-
-  _get(route: string): Promise<any> {
-    return unwrapAxiosResponse(axios.get(`${this._url}${route}`))
-  }
-
-  _post(route: string, data: Object): Promise<any> {
-    return unwrapAxiosResponse(axios.post(`${this._url}${route}`, data))
-  }
-
-  async _hashOrHeightToHash(hashOrHeight: string | number): Promise<string> {
-    if (typeof hashOrHeight === 'string') {
-      return Promise.resolve(hashOrHeight)
-    } else if (typeof hashOrHeight === 'number') {
-      const hashInfo = await this._get(`/block-index/${hashOrHeight}`)
-      return hashInfo.blockHash
-    }
-    throw new Error('input to getBlock must be a string or a number')
-  }
+export class BchInsightApi extends ApiBase implements Api {
 
   getAddress(address: Address): Promise<Object> {
     return this._get(`/addr/${address.toString()}`)

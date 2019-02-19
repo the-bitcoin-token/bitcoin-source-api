@@ -4,52 +4,27 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 
-import axios from 'axios'
 import { Address, Transaction } from 'bitcoinsource'
 import { Api } from './api'
-import ApiError from './error'
+import { ApiBase } from './apibase'
 import type { OutputId, TransactionId, Txo } from './types'
-import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
+import { removeDuplicates, renameProperty } from './util'
 
 /**
  * Default BSV mainnet insight node url
  */
-//export const BSV_MAINNET_BITINDEX_URL = 'https://www.bitindex.network/api/v3'
 export const BSV_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
 /**
  * Default BSV testnet insight node url
  */
-export const BSV_TESTNET_URL = 'https://testnet.bitcoincloud.net/api'
+export const BSV_TESTNET_URL = ''
 
 /**
  * API for BSV Insight nodes
  * @param {string} url Insight API URL
  */
-export class BsvInsightApi implements Api {
-  _url: string
-
-  constructor(url: string) {
-    this._url = url
-  }
-
-  _get(route: string): Promise<any> {
-    return unwrapAxiosResponse(axios.get(`${this._url}${route}`))
-  }
-
-  _post(route: string, data: Object): Promise<any> {
-    return unwrapAxiosResponse(axios.post(`${this._url}${route}`, data))
-  }
-
-  async _hashOrHeightToHash(hashOrHeight: string | number): Promise<string> {
-    if (typeof hashOrHeight === 'string') {
-      return Promise.resolve(hashOrHeight)
-    } else if (typeof hashOrHeight === 'number') {
-      const hashInfo = await this._get(`/block-index/${hashOrHeight}`)
-      return hashInfo.blockHash
-    }
-    throw new Error('input to getBlock must be a string or a number')
-  }
+export class BsvInsightApi extends ApiBase implements Api {
 
   getAddress(address: Address): Promise<Object> {
     return this._get(`/addr/${address.toString()}`)
