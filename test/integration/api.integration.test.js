@@ -31,21 +31,20 @@ testdata.forEach(({
       })
     })
 
-    if (typeof api.getBlock === 'function') {
-      describe('getBlock', () => {
-        it('Should retrieve the block for a given block hash', async () => {
-          const res = await api.getBlock(getBlockHash)
-          expect(res).toBeDefined()
-          expect(res.hash).toBe(getBlockHash)
-        })
+    const testIfBlock = typeof api.getBlock === 'function' ? it : it.skip
+    describe('getBlock', () => {
+      testIfBlock('Should retrieve the block for a given block hash', async () => {
+        const res = await api.getBlock(getBlockHash)
+        expect(res).toBeDefined()
+        expect(res.hash).toBe(getBlockHash)
+      }, 10000)
 
-        it('Should retrieve the block for a given block number', async () => {
-          const res = await api.getBlock(1)
-          expect(res).toBeDefined()
-          expect(res.hash).toBe(genesisBlockHash)
-        })
-      })
-    }
+      testIfBlock('Should retrieve the block for a given block number', async () => {
+        const res = await api.getBlock(1)
+        expect(res).toBeDefined()
+        expect(res.hash).toBe(genesisBlockHash)
+      }, 10000)
+    })
 
     describe('getBlockHash', () => {
       it('Should retrieve the block hash for a given block height', async () => {
@@ -66,23 +65,23 @@ testdata.forEach(({
       })
     })
 
-    if (typeof api.getRawBlock === 'function') {
+    const testIfRawBlock = typeof api.getRawBlock === 'function' ? it : it.skip
       describe('getRawBlock', () => {
-        it('Should retrieve the raw block for a given block hash', async () => {
+        testIfRawBlock('Should retrieve the raw block for a given block hash', async () => {
           const res = await api.getRawBlock(getRawBlockHash)
           expect(res).toBeDefined()
           expect(res.indexOf(' ')).toBe(-1)
           expect(res).toBe(getRawBlockContents)
         })
 
-        it('Should retrieve the block for a given block height', async () => {
+        testIfRawBlock('Should retrieve the block for a given block height', async () => {
           const res = await api.getRawBlock(1)
           expect(res).toBeDefined()
           expect(res.indexOf(' ')).toBe(-1)
           expect(res).toBe(genesisBlockContents)
         })
 
-        it('Should parse a block to JSON', async () => {
+        testIfRawBlock('Should parse a block to JSON', async () => {
           const res = await api.getRawBlock(getRawBlockHash)
           const blockBuf = Buffer.from(res, 'hex')
           const block = Block.fromBuffer(blockBuf)
@@ -91,7 +90,6 @@ testdata.forEach(({
           expect(block.transactions).toBeDefined()
         })
       })
-    }
 
     describe('getTransaction', () => {
       it('Should retrieve the transaction json for a given id', async () => {
@@ -160,36 +158,37 @@ testdata.forEach(({
       })
     })
 
-    if (typeof skipTests === "undefined" || !skipTests.includes('sendTransaction')) {
-      describe('sendTransaction', () => {
-        it('Should build and broadcast a transaction', async () => {
-          const hdPrivateKey = Mnemonic(mnemonic).toHDPrivateKey()
-          const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
-          const address = derived.publicKey.toAddress(network)
-          const amount = Transaction.DUST_AMOUNT
-          const fee = Transaction.FEE_SECURITY_MARGIN
-          const utxos = (await api.getUtxos(address)).map(u => 
-            renameProperty('vout', 'outputIndex', renameProperty('script', 'scriptPubKey', u))
-          )
+    const testIfNotSkip = (nameOfTest) => 
+      (typeof skipTests === "undefined" || !skipTests.includes(nameOfTest)) ? it : it.skip
 
-          const transaction = new Transaction()
-            .from(utxos)
-            .to(address, amount)
-            .change(address)
-            .sign(derived.privateKey)
+    describe('sendTransaction', () => {
+      testIfNotSkip('sendTransaction')('Should build and broadcast a transaction', async () => {
+        const hdPrivateKey = Mnemonic(mnemonic).toHDPrivateKey()
+        const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
+        const address = derived.publicKey.toAddress(network)
+        const amount = Transaction.DUST_AMOUNT
+        const fee = Transaction.FEE_SECURITY_MARGIN
+        const utxos = (await api.getUtxos(address)).map(u => 
+          renameProperty('vout', 'outputIndex', renameProperty('script', 'scriptPubKey', u))
+        )
 
-          expect(transaction).toBeDefined()
-          expect(transaction.isFullySigned()).toBe(true)
-          expect(Array.isArray(transaction.inputs)).toBe(true)
-          expect(transaction.inputs.length).toBeGreaterThan(0)
-          expect(Array.isArray(transaction.outputs)).toBe(true)
-          expect(transaction.outputs.length).toBeGreaterThan(0)
-          const res = await api.sendTransaction(transaction)
-          expect(res).toBeDefined()
-          expect(res.txId).toBeDefined()
-          console.log(res.txId)
-        })
+        const transaction = new Transaction()
+          .from(utxos)
+          .to(address, amount)
+          .change(address)
+          .sign(derived.privateKey)
+
+        expect(transaction).toBeDefined()
+        expect(transaction.isFullySigned()).toBe(true)
+        expect(Array.isArray(transaction.inputs)).toBe(true)
+        expect(transaction.inputs.length).toBeGreaterThan(0)
+        expect(Array.isArray(transaction.outputs)).toBe(true)
+        expect(transaction.outputs.length).toBeGreaterThan(0)
+        const res = await api.sendTransaction(transaction)
+        expect(res).toBeDefined()
+        expect(res.txId).toBeDefined()
+        console.log(res.txId)
       })
-    }
+    })
   })
 })
