@@ -31,19 +31,21 @@ testdata.forEach(({
       })
     })
 
-    describe('getBlock', () => {
-      it('Should retrieve the block for a given block hash', async () => {
-        const res = await api.getBlock(getBlockHash)
-        expect(res).toBeDefined()
-        expect(res.hash).toBe(getBlockHash)
-      })
+    if (typeof api.getBlock === 'function') {
+      describe('getBlock', () => {
+        it('Should retrieve the block for a given block hash', async () => {
+          const res = await api.getBlock(getBlockHash)
+          expect(res).toBeDefined()
+          expect(res.hash).toBe(getBlockHash)
+        })
 
-      it('Should retrieve the block for a given block number', async () => {
-        const res = await api.getBlock(1)
-        expect(res).toBeDefined()
-        expect(res.hash).toBe(genesisBlockHash)
+        it('Should retrieve the block for a given block number', async () => {
+          const res = await api.getBlock(1)
+          expect(res).toBeDefined()
+          expect(res.hash).toBe(genesisBlockHash)
+        })
       })
-    })
+    }
 
     describe('getBlockHash', () => {
       it('Should retrieve the block hash for a given block height', async () => {
@@ -64,7 +66,7 @@ testdata.forEach(({
       })
     })
 
-    if ((typeof skipTests === "undefined") || !skipTests.includes('getRawBlock')) {
+    if (typeof api.getRawBlock === 'function') {
       describe('getRawBlock', () => {
         it('Should retrieve the raw block for a given block hash', async () => {
           const res = await api.getRawBlock(getRawBlockHash)
@@ -137,7 +139,7 @@ testdata.forEach(({
         expect(res[0].amount).toBeDefined()
         expect(res[0].satoshis).toBeDefined()
         expect(res[0].confirmations).toBeDefined()
-      })
+      }, 9000)
     })
 
     describe('getTxo', () => {
@@ -158,7 +160,7 @@ testdata.forEach(({
       })
     })
 
-    if (mnemonic && (typeof skipTests === "undefined" || !skipTests.includes('sendTransaction'))) {
+    if (typeof skipTests === "undefined" || !skipTests.includes('sendTransaction')) {
       describe('sendTransaction', () => {
         it('Should build and broadcast a transaction', async () => {
           const hdPrivateKey = Mnemonic(mnemonic).toHDPrivateKey()

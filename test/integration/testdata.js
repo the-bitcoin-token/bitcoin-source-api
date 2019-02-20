@@ -31,6 +31,7 @@ export const testdata = [
   {
     name: 'BCH Mainnet',
     network: 'mainnet',
+    skipTests: ['sendTransaction'],
     api: new BchInsightApi(BCH_BLOCKDOZER_MAINNET_URL),
     testAddress: new Address('1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1'),
     addressCountMinimum: 15,
@@ -54,7 +55,7 @@ export const testdata = [
   {
     name: 'BSV Mainnet',
     network: 'mainnet',
-    skipTests: ['getRawBlock'],
+    skipTests: ['getRawBlock', 'sendTransaction'],
     mnemonic: null,
     api: new BsvInsightApi(BSV_MAINNET_URL),
     testAddress: new Address('1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1'),
