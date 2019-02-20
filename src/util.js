@@ -14,7 +14,7 @@ function axiosToApiError(error) {
       data.error || (data.indexOf('Code:') !== -1 ? data : statusText)
 
     const details = `status\t${status} ${statusText}
-headers\t${headers}
+headers\t${JSON.stringify(headers)}
 message\t${message}
 request\t${method} ${url}${requestData ? `\ndata\t${requestData}` : ''}`
 

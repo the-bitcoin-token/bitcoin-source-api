@@ -4,21 +4,21 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 
-import { ApiBase } from './apibase'
+import { ApiBaseMinimal } from './apibase'
 
 /**
- * Default BCH mainnet insight node url
+ * Default BSV mainnet insight node url
  */
-export const BCH_BLOCKDOZER_MAINNET_URL = 'https://bch.blockdozer.com/api'
+export const BSV_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
 /**
- * Default BCH testnet insight node url
+ * Default BSV testnet insight node url
  */
-export const BCH_BLOCKDOZER_TESTNET_URL = 'https://tbch.blockdozer.com/api'
+export const BSV_TESTNET_URL = ''
 
 /**
- * API for BCH Insight nodes
+ * API for BSV Insight nodes
  * @param {string} url Insight API URL
  */
-export class BchInsightApi extends ApiBase {
+export class BsvInsightApi extends ApiBaseMinimal {
 }
