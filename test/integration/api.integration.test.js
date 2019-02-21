@@ -158,6 +158,8 @@ testdata.forEach(({
       })
     })
 
+    // some tests are skipped because not all api methods are valid on all coins
+    // for example, BSV large blocks might not be appropriate for downloading through insight api
     const testIfNotSkip = (nameOfTest) => 
       (typeof skipTests === "undefined" || !skipTests.includes(nameOfTest)) ? it : it.skip
 

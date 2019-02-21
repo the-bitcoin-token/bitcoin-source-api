@@ -1,6 +1,72 @@
 // @flow
 
-import { removeDuplicates, renameProperty } from '../src/util'
+import axios from 'axios'
+import { removeDuplicates, renameProperty, unwrapAxiosResponse, axiosToApiError } from '../src/util'
+import ApiError from '../src/error';
+
+describe('axiosToApiError', () => {
+  it('should format without config', async () => {
+    const error = {
+      response: {
+        config: {},
+        headers: ['someheaders'],
+        status: 'errStatus',
+        statusText: 'errStatusText',
+        data: 'Code: this is some results data'
+      }
+    }
+    // fool flow
+    delete error.response.config
+    const errFormatted = await axiosToApiError(error)
+    expect(error.response.config).toBeUndefined()
+    expect(errFormatted).toBeDefined()
+    expect(errFormatted.name).toBe('ApiError')
+    expect(errFormatted.message).toBeDefined()
+  })
+  it('should format with config data', async () => {
+    const error = {
+      response: {
+        config:{
+          method: 'errMethod',
+          url: 'errUrl',
+          data: 'here is config data'
+        },
+        headers: ['someheaders'],
+        status: 'errStatus',
+        statusText: 'errStatusText',
+        data: 'this is some results data'
+      }
+    }
+    let errFormatted = await axiosToApiError(error)
+    expect(error.response.config.data).toBeDefined()
+    expect(errFormatted).toBeDefined()
+    expect(errFormatted.name).toBe('ApiError')
+    expect(errFormatted.message).toBeDefined()
+  })
+})
+
+describe('unwrapAxiosResponse', () => {
+  it('should return an error if passed a null', async () => {
+    const promise = unwrapAxiosResponse(Promise.resolve(null))
+    await expect(promise).rejects.toThrowError(`Cannot read property 'data' of null`)
+  })
+
+  it('should return data if error has data', async () => {
+    const error = {
+      data: 'dat',
+      message: 'mess'
+    }
+    const apierror = await unwrapAxiosResponse(Promise.resolve(error))
+    expect(apierror).toBeDefined()
+    expect(apierror).toBe('dat')
+  })
+
+  it('should return error given a bad url', async () => {
+    const apiError = new ApiError('Communication error', "Service unavailable")
+    await expect(unwrapAxiosResponse(axios.get(`some bad url`))).rejects.toThrowError(apiError)
+  })
+
+})
 
 describe('renameProperty', () => {
   it('should rename object property', async () => {

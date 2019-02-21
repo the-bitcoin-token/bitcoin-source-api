@@ -2,14 +2,14 @@
 
 import ApiError from './error'
 
-function axiosToApiError(error) {
+export function axiosToApiError(error: Object) {
   if (error.response) {
     const { data, status, statusText, headers } = error.response
     const { method, url } = error.response.config || {
       method: 'unknown',
       url: 'unknown'
     }
-    const requestData = error.response.config.data
+    const requestData = (error.response.config || {}).data || ''
     const message =
       data.error || (data.indexOf('Code:') !== -1 ? data : statusText)
 
