@@ -117,13 +117,7 @@ export class ApiInsightBase implements IInsightApiBasic {
   }
 }
 
-export class ApiInsight extends ApiInsightBase
-  implements IInsightApi {
-
-  constructor(url: string) {
-    super(url)
-  }
-  
+export class ApiInsight extends ApiInsightBase implements IInsightApi {
   async getBlock(hashOrHeight: string | number): Promise<Object> {
     const hash = await this._hashOrHeightToHash(hashOrHeight)
     return this._get(`/block/${hash}`)
