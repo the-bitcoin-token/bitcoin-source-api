@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 import { removeDuplicates, renameProperty, unwrapAxiosResponse, axiosToApiError } from '../src/util'
-import ApiError from '../src/error';
+import ApiError from '../src/error'
 
 describe('axiosToApiError', () => {
   it('should format without config', async () => {

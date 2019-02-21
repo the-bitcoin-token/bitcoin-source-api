@@ -97,14 +97,14 @@ testdata.forEach(({
           expect(res).toBeDefined()
           expect(res.indexOf(' ')).toBe(-1)
           expect(res).toBe(getRawBlockContents)
-        })
+        }, 9000)
 
         testIfRawBlock('Should retrieve the block for a given block height', async () => {
           const res = await api.getRawBlock(1)
           expect(res).toBeDefined()
           expect(res.indexOf(' ')).toBe(-1)
           expect(res).toBe(genesisBlockContents)
-        })
+        }, 9000)
 
         testIfRawBlock('Should parse a block to JSON', async () => {
           const res = await api.getRawBlock(getRawBlockHash)
@@ -113,7 +113,7 @@ testdata.forEach(({
           expect(block).toBeDefined()
           expect(block.header).toBeDefined()
           expect(block.transactions).toBeDefined()
-        })
+        }, 9000)
       })
 
     describe('getTransaction', () => {
@@ -206,7 +206,7 @@ testdata.forEach(({
       testIfNotSkip('sendTransaction')('Should build and broadcast a transaction', async () => {
         const hdPrivateKey = Mnemonic(mnemonic).toHDPrivateKey()
         const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
-        const address = derived.publicKey.toAddress(network)
+        const address = derived.publicKey.toAddress(api.network)
         const amount = Transaction.DUST_AMOUNT
         const fee = Transaction.FEE_SECURITY_MARGIN
         const utxos = (await api.getUtxos(address)).map(u => 

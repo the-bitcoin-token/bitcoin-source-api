@@ -4,7 +4,7 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 
-import { ApiInsightBase } from './apibase'
+import { ApiInsight } from './apibase'
 
 /**
  * Default BCH mainnet insight node url
@@ -20,4 +20,4 @@ export const BCH_BLOCKDOZER_TESTNET_URL = 'https://tbch.blockdozer.com/api'
  * API for BCH Insight nodes
  * @param {string} url Insight API URL
  */
-export class BchInsightApi extends ApiInsightBase {}
+export class BchInsightApi extends ApiInsight {}
