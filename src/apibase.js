@@ -13,7 +13,7 @@ import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 /**
  * Base class for implementing Api
  */
-export class ApiInsightBaseBasic implements IInsightApiBasic {
+export class ApiInsightBase implements IInsightApiBasic {
   _url: string
 
   /**
@@ -117,8 +117,13 @@ export class ApiInsightBaseBasic implements IInsightApiBasic {
   }
 }
 
-export class ApiInsightBase extends ApiInsightBaseBasic
+export class ApiInsight extends ApiInsightBase
   implements IInsightApi {
+
+  constructor(url: string) {
+    super(url)
+  }
+  
   async getBlock(hashOrHeight: string | number): Promise<Object> {
     const hash = await this._hashOrHeightToHash(hashOrHeight)
     return this._get(`/block/${hash}`)
