@@ -8,7 +8,6 @@ import type { OutputId, Txo, TransactionId, Coin, Network } from './types'
  * @interface
  */
 export interface IInsightApiBasic {
-
   /**
    * the coin that the api manages
    */

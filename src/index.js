@@ -1,7 +1,7 @@
 // @flow
 
-import { Insight } from './insight'
-//import { Coin, Network } from './types'
+import Insight from './insight'
+// import { Coin, Network } from './types'
 
 import {
   BchInsightApi,
@@ -18,7 +18,6 @@ export {
   BsvInsightApi,
   BSV_MAINNET_URL,
   BSV_TESTNET_URL,
-
   Insight
   // bch: new Insight({ coin: Coin.bch }),
   // bch(config): () => {new Insight(config)},
