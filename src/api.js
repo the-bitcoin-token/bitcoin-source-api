@@ -1,27 +1,24 @@
 // @flow
 
-import BitcoinSource from 'bitcoinsource'
-
+import { Address, Transaction } from 'bitcoinsource'
 import type { OutputId, Txo, TransactionId } from './types'
-
-const { Address, Transaction } = BitcoinSource
 
 /**
  * Rest API interface that all supported chains must implement
  * @interface
  */
-export interface IApiMinimal {
+export interface IInsightApiBasic {
   /**
    * Retrieves a given address' history.
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getAddress(address: Address): Promise<Object>;
 
   /**
    * Retrieves a given address' balance in satoshis.
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getBalance(address: Address): Promise<number>;
 
@@ -29,7 +26,7 @@ export interface IApiMinimal {
    * Sends a transaction for broadcasting.
    * @returns the resulting transaction id
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   sendTransaction(transaction: Transaction): Promise<TransactionId>;
 
@@ -37,14 +34,14 @@ export interface IApiMinimal {
    * Retrieves the hash of a block from its height.
    * @param {*} height Block height
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getBlockHash(height: number): Promise<string>;
 
   /**
    * Retrives the hash of the latest block.
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getLastBlockHash(): Promise<string>;
 
@@ -52,7 +49,7 @@ export interface IApiMinimal {
    * Retrieves a JSON-formatted transaction from its hash
    * @param {string} txId Transaction hash
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getTransaction(txId: string): Promise<Object>;
 
@@ -60,7 +57,7 @@ export interface IApiMinimal {
    * Retrieves a hex-formatted transaction given its hash
    * @param {*} txId Transaction hash
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getRawTransaction(txId: string): Promise<Object>;
 
@@ -68,7 +65,7 @@ export interface IApiMinimal {
    * Retrieves a given address' unspent outputs (UTXO set).
    * @param {Address} address Address whose UTXOs to retrieve
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getUtxos(address: Address): Promise<Array<Txo>>;
 
@@ -76,7 +73,7 @@ export interface IApiMinimal {
    * Gets a transaction output given an output id.
    * @param {OutputId} outputId Transaction id and output index
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApiMinimal
+   * @memberof IInsightApiBasic
    */
   getTxo(outputId: OutputId): Promise<Txo>;
 }
@@ -85,13 +82,12 @@ export interface IApiMinimal {
  * Rest API interface that all defines a complete implementation
  * @interface
  */
-export interface IApi extends IApiMinimal {
-
+export interface IInsightApi extends IInsightApiBasic {
   /**
    * Retrieves a json-formatted block from its hash or height.
    * @param {string | number} hashOrHeight Hash or height of the block
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApi
+   * @memberof IInsightApi
    */
   getBlock(hashOrHeight: string | number): Promise<Object>;
 
@@ -99,8 +95,7 @@ export interface IApi extends IApiMinimal {
    * Retrives a hex-formatted block given its hash or height.
    * @param {string | number} hashOrHeight Hash or height of the block
    * @throws {ApiError} if the request cannot be completed.
-   * @memberof IApi
+   * @memberof IInsightApi
    */
   getRawBlock(hashOrHeight: string | number): Promise<string>;
-
 }

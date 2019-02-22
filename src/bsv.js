@@ -4,7 +4,7 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 
-import { ApiBaseMinimal } from './apibase'
+import { ApiInsightBase } from './apibase'
 
 /**
  * Default BSV mainnet insight node url
@@ -20,5 +20,4 @@ export const BSV_TESTNET_URL = ''
  * API for BSV Insight nodes
  * @param {string} url Insight API URL
  */
-export class BsvInsightApi extends ApiBaseMinimal {
-}
+export class BsvInsightApi extends ApiInsightBase {}
