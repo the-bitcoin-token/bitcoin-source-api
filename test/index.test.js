@@ -6,8 +6,7 @@ import {
   BCH_BLOCKDOZER_MAINNET_URL,
   BCH_BLOCKDOZER_TESTNET_URL,
   BsvInsightApi,
-  BSV_MAINNET_URL,
-  BSV_TESTNET_URL
+  BSV_BCHSVEXPLORER_MAINNET_URL
 } from '../src'
 
 describe('exports', () => {
@@ -16,8 +15,7 @@ describe('exports', () => {
     expect(BCH_BLOCKDOZER_MAINNET_URL).toBeDefined()
     expect(BCH_BLOCKDOZER_TESTNET_URL).toBeDefined()
     expect(BsvInsightApi).toBeDefined()
-    expect(BSV_MAINNET_URL).toBeDefined()
-    expect(BSV_TESTNET_URL).toBeDefined()
+    expect(BSV_BCHSVEXPLORER_MAINNET_URL).toBeDefined()
     expect(Insight).toBeDefined()
   })
 })

@@ -11,12 +11,12 @@ export interface IInsightApiBasic {
   /**
    * the coin that the api manages
    */
-  coin: Coin;
+  +coin: Coin;
 
   /**
    * network
    */
-  network: Network;
+  +network: Network;
 
   /**
    * url string should always be passed through constructor

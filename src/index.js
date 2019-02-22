@@ -9,7 +9,7 @@ import {
   BCH_BLOCKDOZER_TESTNET_URL
 } from './bch'
 
-import { BsvInsightApi, BSV_MAINNET_URL, BSV_TESTNET_URL } from './bsv'
+import { BsvInsightApi, BSV_BCHSVEXPLORER_MAINNET_URL } from './bsv'
 
 function bch(config: ApiConfiguration) {
   return Insight.create({ ...config, coin: 'bch' })
@@ -27,6 +27,5 @@ export {
   BCH_BLOCKDOZER_MAINNET_URL,
   BCH_BLOCKDOZER_TESTNET_URL,
   BsvInsightApi,
-  BSV_MAINNET_URL,
-  BSV_TESTNET_URL
+  BSV_BCHSVEXPLORER_MAINNET_URL
 }

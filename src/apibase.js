@@ -13,7 +13,7 @@ import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 /**
  * Base class for implementing Api
  */
-export class ApiInsightBase implements IInsightApiBasic {
+export default class ApiInsightBase implements IInsightApiBasic {
   _url: string
   _coin: Coin
   _network: Network
@@ -22,7 +22,9 @@ export class ApiInsightBase implements IInsightApiBasic {
    *
    * @param {string} url Insight API URL
    */
-  constructor(url: string) {
+  constructor(coin: Coin, network: Network, url: string) {
+    this._coin = coin
+    this._network = network
     this._url = url
   }
 
@@ -33,15 +35,9 @@ export class ApiInsightBase implements IInsightApiBasic {
   get coin(): Coin {
     return this._coin
   }
-  set coin(value: Coin) {
-    this._coin = value
-  }
 
   get network(): Network {
     return this._network
-  }
-  set network(value: Network) {
-    this._network = value
   }
 
   _get(route: string): Promise<any> {
@@ -134,18 +130,5 @@ export class ApiInsightBase implements IInsightApiBasic {
       confirmations,
       spent
     }
-  }
-}
-
-export class ApiInsight extends ApiInsightBase implements IInsightApi {
-  async getBlock(hashOrHeight: string | number): Promise<Object> {
-    const hash = await this._hashOrHeightToHash(hashOrHeight)
-    return this._get(`/block/${hash}`)
-  }
-
-  async getRawBlock(hashOrHeight: string | number): Promise<string> {
-    const hash = await this._hashOrHeightToHash(hashOrHeight)
-    const blockInfo = await this._get(`/rawblock/${hash}`)
-    return blockInfo.rawblock
   }
 }
