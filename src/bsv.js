@@ -12,11 +12,6 @@ import { ApiInsightBase } from './apibase'
 export const BSV_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
 /**
- * Default BSV testnet insight node url
- */
-export const BSV_TESTNET_URL = ''
-
-/**
  * API for BSV Insight nodes
  * @param {string} url Insight API URL
  */
