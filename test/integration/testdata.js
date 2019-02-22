@@ -1,20 +1,13 @@
 import { Address } from 'bitcoinsource'
-import {
-  BchInsightApi,
-  BCH_BLOCKDOZER_TESTNET_URL,
-  BCH_BLOCKDOZER_MAINNET_URL,
-  BsvInsightApi,
-  BSV_MAINNET_URL
-} from '../../src'
+import { Insight } from '../../src'
 
 export const testdata = [
   {
     name: 'BCH Testnet',
-    network: 'testnet',
+    api: Insight.create({ coin: 'bch', network: 'testnet' }),
+    skipTests: [],
     mnemonic:
       'rail install size scorpion orchard kingdom vacuum collect pencil element fall enhance media island medal',
-    skipTests: [],
-    api: new BchInsightApi(BCH_BLOCKDOZER_TESTNET_URL),
     testAddress: new Address('my9uLPBr38a4ayEkaZfcaiQArwTzYSho3y'),
     addressCountMinimum: 900,
     txId: '82dcd699b019c90f9a77f1002a006d7fccb242fa7e85f9273b33b7e49544749f',
@@ -41,9 +34,8 @@ export const testdata = [
   },
   {
     name: 'BCH Mainnet',
-    network: 'mainnet',
+    api: Insight.create({ coin: 'bch', network: 'mainnet' }),
     skipTests: ['sendTransaction'],
-    api: new BchInsightApi(BCH_BLOCKDOZER_MAINNET_URL),
     testAddress: new Address('1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1'),
     addressCountMinimum: 15,
     txId: '766a4a171acaea360823d6feeb020c899ed582c12e8919bbe7610ade47b51e9b',
@@ -71,10 +63,9 @@ export const testdata = [
   },
   {
     name: 'BSV Mainnet',
-    network: 'mainnet',
+    api: Insight.create({ coin: 'bsv', network: 'mainnet' }),
     skipTests: ['getRawBlock', 'sendTransaction'],
     mnemonic: null,
-    api: new BsvInsightApi(BSV_MAINNET_URL),
     testAddress: new Address('1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1'),
     addressCountMinimum: 15,
     txId: '766a4a171acaea360823d6feeb020c899ed582c12e8919bbe7610ade47b51e9b',

@@ -20,3 +20,13 @@ export type Txo = {|
   confirmations: number,
   spent: boolean
 |}
+
+export type Coin = 'bch' | 'bsv'
+
+export type Network = 'mainnet' | 'testnet'
+
+export type ApiConfiguration = {|
+  coin: Coin,
+  network?: Network,
+  url?: string
+|}

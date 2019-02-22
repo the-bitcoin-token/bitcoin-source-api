@@ -7,7 +7,6 @@ import { renameProperty } from '../../src/util'
 testdata.forEach(
   ({
     name,
-    network,
     skipTests,
     mnemonic,
     api,
@@ -120,7 +119,8 @@ testdata.forEach(
             expect(res).toBeDefined()
             expect(res.indexOf(' ')).toBe(-1)
             expect(res).toBe(getRawBlockContents)
-          }
+          },
+          9000
         )
 
         testIfRawBlock(
@@ -130,17 +130,22 @@ testdata.forEach(
             expect(res).toBeDefined()
             expect(res.indexOf(' ')).toBe(-1)
             expect(res).toBe(genesisBlockContents)
-          }
+          },
+          9000
         )
 
-        testIfRawBlock('Should parse a block to JSON', async () => {
-          const res = await api.getRawBlock(getRawBlockHash)
-          const blockBuf = Buffer.from(res, 'hex')
-          const block = Block.fromBuffer(blockBuf)
-          expect(block).toBeDefined()
-          expect(block.header).toBeDefined()
-          expect(block.transactions).toBeDefined()
-        })
+        testIfRawBlock(
+          'Should parse a block to JSON',
+          async () => {
+            const res = await api.getRawBlock(getRawBlockHash)
+            const blockBuf = Buffer.from(res, 'hex')
+            const block = Block.fromBuffer(blockBuf)
+            expect(block).toBeDefined()
+            expect(block.header).toBeDefined()
+            expect(block.transactions).toBeDefined()
+          },
+          9000
+        )
       })
 
       describe('getTransaction', () => {
@@ -237,7 +242,7 @@ testdata.forEach(
           async () => {
             const hdPrivateKey = Mnemonic(mnemonic).toHDPrivateKey()
             const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
-            const address = derived.publicKey.toAddress(network)
+            const address = derived.publicKey.toAddress(api.network)
             const amount = Transaction.DUST_AMOUNT
             const utxos = (await api.getUtxos(address)).map(u =>
               renameProperty(

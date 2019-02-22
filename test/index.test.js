@@ -1,6 +1,7 @@
 // @flow
 
 import {
+  Insight,
   BchInsightApi,
   BCH_BLOCKDOZER_MAINNET_URL,
   BCH_BLOCKDOZER_TESTNET_URL,
@@ -17,5 +18,6 @@ describe('exports', () => {
     expect(BsvInsightApi).toBeDefined()
     expect(BSV_MAINNET_URL).toBeDefined()
     expect(BSV_TESTNET_URL).toBeDefined()
+    expect(Insight).toBeDefined()
   })
 })

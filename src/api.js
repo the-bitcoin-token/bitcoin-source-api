@@ -1,13 +1,28 @@
 // @flow
 
 import { Address, Transaction } from 'bitcoinsource'
-import type { OutputId, Txo, TransactionId } from './types'
+import type { OutputId, Txo, TransactionId, Coin, Network } from './types'
 
 /**
  * Rest API interface that all supported chains must implement
  * @interface
  */
 export interface IInsightApiBasic {
+  /**
+   * the coin that the api manages
+   */
+  coin: Coin;
+
+  /**
+   * network
+   */
+  network: Network;
+
+  /**
+   * url string should always be passed through constructor
+   */
+  +url: string;
+
   /**
    * Retrieves a given address' history.
    * @throws {ApiError} if the request cannot be completed.

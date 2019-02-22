@@ -7,7 +7,7 @@ import axios from 'axios'
 import { Address, Transaction } from 'bitcoinsource'
 import { IInsightApi, IInsightApiBasic } from './api'
 import ApiError from './error'
-import type { OutputId, TransactionId, Txo } from './types'
+import type { Coin, Network, OutputId, TransactionId, Txo } from './types'
 import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 
 /**
@@ -15,6 +15,8 @@ import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
  */
 export class ApiInsightBase implements IInsightApiBasic {
   _url: string
+  _coin: Coin
+  _network: Network
 
   /**
    *
@@ -22,6 +24,24 @@ export class ApiInsightBase implements IInsightApiBasic {
    */
   constructor(url: string) {
     this._url = url
+  }
+
+  get url(): string {
+    return this._url
+  }
+
+  get coin(): Coin {
+    return this._coin
+  }
+  set coin(value: Coin) {
+    this._coin = value
+  }
+
+  get network(): Network {
+    return this._network
+  }
+  set network(value: Network) {
+    this._network = value
   }
 
   _get(route: string): Promise<any> {
