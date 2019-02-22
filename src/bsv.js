@@ -12,12 +12,31 @@ import ApiInsightBase from './apibase'
  */
 export const BSV_BCHSVEXPLORER_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
+export const Urls = [
+  {
+    isDefault: true,
+    name: 'BSV_BCHSVEXPLORER_MAINNET_URL',
+    network: 'mainnet',
+    url: BSV_BCHSVEXPLORER_MAINNET_URL
+  }
+]
+
 /**
  * API for BSV Insight nodes
  * @param {string} url Insight API URL
  */
 export class BsvInsightApi extends ApiInsightBase {
   constructor(network: Network, url: string) {
-    super('bsv', network, url)
+    let foundurl = url
+    if (!foundurl) {
+      const searchNetwork = network || 'mainnet'
+      const found = Urls.find(u => u.network === searchNetwork)
+      if (found) {
+        foundurl = found.url
+      } else {
+        throw new Error(`Cannot find any url for bsv ${searchNetwork}`)
+      }
+    }
+    super('bsv', network, foundurl)
   }
 }
