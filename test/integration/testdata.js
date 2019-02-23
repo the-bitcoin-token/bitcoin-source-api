@@ -1,11 +1,35 @@
 import { Address } from 'bitcoinsource'
 import { Insight } from '../../src'
+import ApiInsightBase from '../../src/apibase'
+import ApiInsight from '../../src/apiinsight'
 
-export const testdata = [
+const runAllTests = () => describe
+
+const boolToDescribeFunction = skipIfTrue =>
+  skipIfTrue ? describe.skip : describe
+
+const skipSendTransaction = (api, testName) => {
+  if (testName === 'sendTransaction') return true
+  return false
+}
+
+const skipBigBlocks = (api, testName) => {
+  if (api instanceof ApiInsight) return false
+  if (
+    api instanceof ApiInsightBase &&
+    (testName === 'getBlock' || testName === 'getRawBlock')
+  ) {
+    console.log(`skipping ${api.coin} > ${testName}`)
+    return true
+  }
+  return false
+}
+
+const testdata = [
   {
     name: 'BCH Testnet',
     api: Insight.create({ coin: 'bch', network: 'testnet' }),
-    skipTests: [],
+    skipCheck: runAllTests,
     mnemonic:
       'rail install size scorpion orchard kingdom vacuum collect pencil element fall enhance media island medal',
     testAddress: new Address('my9uLPBr38a4ayEkaZfcaiQArwTzYSho3y'),
@@ -35,7 +59,8 @@ export const testdata = [
   {
     name: 'BCH Mainnet',
     api: Insight.create({ coin: 'bch', network: 'mainnet' }),
-    skipTests: ['sendTransaction'],
+    skipCheck: (api, testName) =>
+      boolToDescribeFunction(skipSendTransaction(api, testName)),
     testAddress: new Address('1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1'),
     addressCountMinimum: 15,
     txId: '766a4a171acaea360823d6feeb020c899ed582c12e8919bbe7610ade47b51e9b',
@@ -64,7 +89,10 @@ export const testdata = [
   {
     name: 'BSV Mainnet',
     api: Insight.create({ coin: 'bsv', network: 'mainnet' }),
-    skipTests: ['getRawBlock', 'sendTransaction'],
+    skipCheck: (api, testName) =>
+      boolToDescribeFunction(
+        skipBigBlocks(api, testName) || skipSendTransaction(api, testName)
+      ),
     mnemonic: null,
     testAddress: new Address('1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1'),
     addressCountMinimum: 15,

@@ -1,7 +1,7 @@
 // @flow
-/* eslint-disable flowtype-errors/show-errors */
 
 import Insight from '../src/insight'
+import { IInsightApiBasic } from '../src/api'
 import ApiInsightBase from '../src/apibase'
 import ApiInsight from '../src/apiinsight'
 import {
@@ -15,6 +15,7 @@ describe('insight', () => {
     const bsv = Insight.create({ coin: 'bsv' })
     expect(bsv).toBeDefined()
     expect(bsv).toBeInstanceOf(ApiInsightBase)
+    expect((bsv: IInsightApiBasic)).toBeDefined()
     expect(bsv.coin).toBe('bsv')
     expect(bsv.network).toBe('mainnet')
     expect(bsv.url).toBe(BSV_BCHSVEXPLORER_MAINNET_URL)
@@ -23,6 +24,7 @@ describe('insight', () => {
     const bsv = Insight.create({ coin: 'bsv', network: 'mainnet' })
     expect(bsv).toBeDefined()
     expect(bsv).toBeInstanceOf(ApiInsightBase)
+    expect((bsv: IInsightApiBasic)).toBeDefined()
     expect(bsv.coin).toBe('bsv')
     expect(bsv.network).toBe('mainnet')
     expect(bsv.url).toBe(BSV_BCHSVEXPLORER_MAINNET_URL)
@@ -39,6 +41,7 @@ describe('insight', () => {
     })
     expect(bsv).toBeDefined()
     expect(bsv).toBeInstanceOf(ApiInsightBase)
+    expect((bsv: IInsightApiBasic)).toBeDefined()
     expect(bsv.coin).toBe('bsv')
     expect(bsv.network).toBe('mainnet')
     expect(bsv.url).toBe('https://ireallyknowwhatiamdoing.ipromise.com')
@@ -48,6 +51,7 @@ describe('insight', () => {
     const bch = Insight.create({ coin: 'bch' })
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
+    expect((bch: IInsightApiBasic)).toBeDefined()
     expect(bch.coin).toBe('bch')
     expect(bch.network).toBe('mainnet')
     expect(bch.url).toBe(BCH_BLOCKDOZER_MAINNET_URL)
@@ -56,6 +60,7 @@ describe('insight', () => {
     const bch = Insight.create({ coin: 'bch', network: 'mainnet' })
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
+    expect((bch: IInsightApiBasic)).toBeDefined()
     expect(bch.coin).toBe('bch')
     expect(bch.network).toBe('mainnet')
     expect(bch.url).toBe(BCH_BLOCKDOZER_MAINNET_URL)
@@ -64,6 +69,7 @@ describe('insight', () => {
     const bch = Insight.create({ coin: 'bch', network: 'testnet' })
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
+    expect((bch: IInsightApiBasic)).toBeDefined()
     expect(bch.coin).toBe('bch')
     expect(bch.network).toBe('testnet')
     expect(bch.url).toBe(BCH_BLOCKDOZER_TESTNET_URL)
@@ -75,6 +81,7 @@ describe('insight', () => {
     })
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
+    expect((bch: IInsightApiBasic)).toBeDefined()
     expect(bch.coin).toBe('bch')
     expect(bch.network).toBe('mainnet')
     expect(bch.url).toBe('https://ireallyknowwhatiamdoing.ipromise.com')
