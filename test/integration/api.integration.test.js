@@ -215,12 +215,12 @@ testdata.forEach(
         it('Should return a transaction output', async () => {
           const res = await api.getTxo({
             txId: txOutput.txId,
-            outputNumber: txOutput.outputNumber
+            outputIndex: txOutput.outputIndex
           })
           expect(res.spent).toBeDefined()
           expect(res.address).toBe(txOutput.address)
           expect(res.txId).toBe(txOutput.txId)
-          expect(res.vout).toBe(txOutput.outputNumber)
+          expect(res.vout).toBe(txOutput.outputIndex)
           expect(res.scriptPubKey).toBe(txOutput.scriptPubKey)
           expect(res.amount).toBe(txOutput.amount)
           expect(res.satoshis).toBe(txOutput.satoshis)
