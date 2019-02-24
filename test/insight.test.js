@@ -2,13 +2,13 @@
 
 import Insight from '../src/insight'
 import { IInsightApiBasic } from '../src/api'
-import ApiInsightBase from '../src/apibase'
+import ApiInsightBase from '../src/apiinsightbase'
 import ApiInsight from '../src/apiinsight'
 import {
   BCH_BLOCKDOZER_MAINNET_URL,
   BCH_BLOCKDOZER_TESTNET_URL
-} from '../src/bch'
-import { BSV_BCHSVEXPLORER_MAINNET_URL } from '../src/bsv'
+} from '../src/coins/bch'
+import { BSV_BCHSVEXPLORER_MAINNET_URL } from '../src/coins/bsv'
 
 describe('insight', () => {
   it('should create bsv default', () => {

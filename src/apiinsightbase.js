@@ -6,8 +6,16 @@
 import axios from 'axios'
 import { Address, Transaction } from 'bitcoinsource'
 import { IInsightApi, IInsightApiBasic } from './api'
+import { Urls, findUrl } from './urls'
 import ApiError from './error'
-import type { Coin, Network, OutputId, TransactionId, Txo } from './types'
+import type {
+  Coin,
+  Network,
+  ApiUrl,
+  OutputId,
+  TransactionId,
+  Txo
+} from './types'
 import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 
 /**
@@ -24,8 +32,19 @@ export default class ApiInsightBase implements IInsightApiBasic {
    */
   constructor(coin: Coin, network: Network, url: string) {
     this._coin = coin
-    this._network = network
+    // mainnet is default network if not specified
+    this._network = network || 'mainnet'
     this._url = url
+    if (!url) {
+      const foundUrl: ApiUrl = findUrl(this._coin, this._network)
+      if (foundUrl) {
+        this._url = foundUrl.url
+      } else {
+        throw new Error(
+          `Cannot find any url for ${this._coin} ${this._network}`
+        )
+      }
+    }
   }
 
   get url(): string {
@@ -109,8 +128,8 @@ export default class ApiInsightBase implements IInsightApiBasic {
   async getTxo(outputId: OutputId): Promise<Txo> {
     const transaction = await this.getTransaction(outputId.txId)
     const output = transaction.vout[outputId.outputNumber]
-
-    const address = output.scriptPubKey.addresses[0]
+    // op_return output does not have an addresses key
+    const address = (output.scriptPubKey.addresses || [''])[0]
     const { txId } = outputId
     const vout = outputId.outputNumber
     const amount = parseFloat(output.value)

@@ -4,22 +4,24 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 
-import type { Network } from './types'
-import ApiInsightBase from './apibase'
+import type { Coin, Network } from '../types'
+import { Urls } from '../urls'
+import ApiInsightBase from '../apiinsightbase'
+
+const thiscoin: Coin = 'bsv'
 
 /**
  * Default BSV mainnet insight node url
  */
 export const BSV_BCHSVEXPLORER_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
-export const Urls = [
-  {
-    isDefault: true,
-    name: 'BSV_BCHSVEXPLORER_MAINNET_URL',
-    network: 'mainnet',
-    url: BSV_BCHSVEXPLORER_MAINNET_URL
-  }
-]
+Urls.push({
+  isDefault: true,
+  name: 'BSV_BCHSVEXPLORER_MAINNET_URL',
+  coin: thiscoin,
+  network: 'mainnet',
+  url: BSV_BCHSVEXPLORER_MAINNET_URL
+})
 
 /**
  * API for BSV Insight nodes
@@ -27,16 +29,6 @@ export const Urls = [
  */
 export class BsvInsightApi extends ApiInsightBase {
   constructor(network: Network, url: string) {
-    let foundurl = url
-    if (!foundurl) {
-      const searchNetwork = network || 'mainnet'
-      const found = Urls.find(u => u.network === searchNetwork)
-      if (found) {
-        foundurl = found.url
-      } else {
-        throw new Error(`Cannot find any url for bsv ${searchNetwork}`)
-      }
-    }
-    super('bsv', network, foundurl)
+    super(thiscoin, network, url)
   }
 }

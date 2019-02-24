@@ -1,7 +1,7 @@
 // @flow
 /* eslint no-underscore-dangle: ["error", { "allowAfterThis": true, "allow": ["_get", "_post", "_unwrap"] }] */
 
-import ApiInsightBase from './apibase'
+import ApiInsightBase from './apiinsightbase'
 import { IInsightApi } from './api'
 
 export default class ApiInsight extends ApiInsightBase implements IInsightApi {

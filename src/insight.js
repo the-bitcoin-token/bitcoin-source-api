@@ -2,10 +2,10 @@
 /* eslint-disable no-case-declarations */
 
 import type { ApiConfiguration } from './types'
-import ApiInsightBase from './apibase'
+import ApiInsightBase from './apiinsightbase'
 import ApiInsight from './apiinsight'
-import { BsvInsightApi } from './bsv'
-import { BchInsightApi } from './bch'
+import { BsvInsightApi } from './coins/bsv'
+import { BchInsightApi } from './coins/bch'
 
 function configErrorMessage(config: ApiConfiguration): string {
   let errorMessage = ``

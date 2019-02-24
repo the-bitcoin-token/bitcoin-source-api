@@ -30,3 +30,11 @@ export type ApiConfiguration = {|
   network?: Network,
   url?: string
 |}
+
+export type ApiUrl = {|
+  isDefault: boolean,
+  name: string,
+  coin: Coin,
+  network: Network,
+  url: string
+|}

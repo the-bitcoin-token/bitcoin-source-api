@@ -1,10 +1,12 @@
 // @flow
 
-import { Block, Mnemonic, Transaction } from 'bitcoinsource'
+import { Block, Mnemonic, Transaction, Address } from 'bitcoinsource'
+import { Insight } from '../../src'
 import data from './testdata'
 import { renameProperty } from '../../src/util'
 
 for (const testdata of data) {
+  testdata.api = Insight.create(testdata.apiconfig)
   describe(testdata.name, () => {
     describe('testing testdata', () => {
       it('must conform to a test input object that we are expecting', () => {
@@ -16,9 +18,11 @@ for (const testdata of data) {
 
     testdata.skipCheck(testdata.api, 'getAddress')('getAddress', () => {
       it('Should retrieve information about the test address', async () => {
-        const res = await testdata.api.getAddress(testdata.testAddress)
+        const res = await testdata.api.getAddress(
+          new Address(testdata.testAddress)
+        )
         expect(res).toBeDefined()
-        expect(res.addrStr).toBe(testdata.testAddress.toString())
+        expect(res.addrStr).toBe(testdata.testAddress)
         expect(res.balance).toBeDefined()
         expect(res.balanceSat).toBeDefined()
         expect(res.totalReceived).toBeDefined()
@@ -38,7 +42,9 @@ for (const testdata of data) {
 
     testdata.skipCheck(testdata.api, 'getBalance')('getBalance', () => {
       it('Should retrieve the balance of the test address', async () => {
-        const res = await testdata.api.getBalance(testdata.testAddress)
+        const res = await testdata.api.getBalance(
+          new Address(testdata.testAddress)
+        )
         expect(res).toBeDefined()
         expect(res).toBeGreaterThan(0)
       })
@@ -156,6 +162,41 @@ for (const testdata of data) {
         expect(res.valueIn).toBeDefined()
         expect(res.fees).toBeDefined()
       })
+      it('Should retrieve the transaction json for a coinbase tx', async () => {
+        const res = await testdata.api.getTransaction(testdata.coinbaseTxId)
+        expect(res).toBeDefined()
+        expect(res.txid).toBe(testdata.coinbaseTxId)
+        expect(res.version).toBeDefined()
+        expect(res.locktime).toBeDefined()
+        expect(res.vin).toBeDefined()
+        expect(res.vin.length).toBe(1)
+        expect(res.vin[0].coinbase).toBeDefined()
+        expect(res.vin[0].txid).toBeUndefined()
+        expect(res.vin[0].n).toBeDefined()
+        expect(res.vin[0].vout).toBeUndefined()
+        expect(res.vin[0].scriptSig).toBeUndefined()
+        expect(res.vin[0].addr).toBeUndefined()
+        expect(res.vin[0].sequence).toBeDefined()
+        expect(res.vin[0].value).toBeUndefined()
+        expect(res.vin[0].valueSat).toBeUndefined()
+        expect(res.vout).toBeDefined()
+        expect(res.vout.length).toBeGreaterThan(0)
+        expect(res.vout[0].value).toBeDefined()
+        expect(res.vout[0].n).toBeDefined()
+        expect(res.vout[0].scriptPubKey).toBeDefined()
+        expect(res.vout[0].spentTxId).toBeDefined()
+        expect(res.vout[0].spentIndex).toBeDefined()
+        expect(res.vout[0].spentHeight).toBeDefined()
+        expect(res.blockhash).toBeDefined()
+        expect(res.blockheight).toBeDefined()
+        expect(res.confirmations).toBeDefined()
+        expect(res.time).toBeDefined()
+        expect(res.blocktime).toBeDefined()
+        expect(res.valueOut).toBeDefined()
+        expect(res.isCoinBase).toBeTruthy()
+        expect(res.valueIn).toBeUndefined()
+        expect(res.fees).toBeUndefined()
+      })
     })
 
     testdata.skipCheck(testdata.api, 'getRawTransaction')(
@@ -172,7 +213,9 @@ for (const testdata of data) {
 
     testdata.skipCheck(testdata.api, 'getUtxos')('getUtxos', () => {
       it('Should retrieve the utxo set of the first test address', async () => {
-        const res = await testdata.api.getUtxos(testdata.testAddress)
+        const res = await testdata.api.getUtxos(
+          new Address(testdata.testAddress)
+        )
         expect(res).toBeDefined()
         expect(res.length).toBeGreaterThan(0)
         expect(res[0].spent).toBe(false)
@@ -214,6 +257,7 @@ for (const testdata of data) {
           const hdPrivateKey = Mnemonic(testdata.mnemonic).toHDPrivateKey()
           const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
           const address = derived.publicKey.toAddress(testdata.api.network)
+          console.log(address)
           const amount = Transaction.DUST_AMOUNT
           const utxos = (await testdata.api.getUtxos(address)).map(u =>
             renameProperty(

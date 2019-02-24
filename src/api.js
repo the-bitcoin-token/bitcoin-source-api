@@ -14,7 +14,7 @@ export interface IInsightApiBasic {
   +coin: Coin;
 
   /**
-   * network
+   * network, mainnet vs testnet
    */
   +network: Network;
 
