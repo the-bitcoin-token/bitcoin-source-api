@@ -36,7 +36,7 @@ export default class ApiInsightBase implements IInsightApiBasic {
     this._network = network || 'mainnet'
     this._url = url
     if (!url) {
-      const foundUrl: ApiUrl = findUrl(this._coin, this._network)
+      const foundUrl: ?ApiUrl = findUrl(this._coin, this._network)
       if (foundUrl) {
         this._url = foundUrl.url
       } else {

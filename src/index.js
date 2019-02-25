@@ -11,12 +11,12 @@ import {
 
 import { BsvInsightApi, BSV_BCHSVEXPLORER_MAINNET_URL } from './coins/bsv'
 
-function bch(config: ApiConfiguration) {
-  return Insight.create({ ...config, coin: 'bch' })
+function bch(config: ?ApiConfiguration) {
+  return Insight.create({ ...(config || {}), coin: 'bch' })
 }
 
-function bsv(config: ApiConfiguration) {
-  return Insight.create({ ...config, coin: 'bsv' })
+function bsv(config: ?ApiConfiguration) {
+  return Insight.create({ ...(config || {}), coin: 'bsv' })
 }
 
 export {

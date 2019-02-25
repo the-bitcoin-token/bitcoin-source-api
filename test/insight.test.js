@@ -4,13 +4,15 @@ import Insight from '../src/insight'
 import { IInsightApiBasic } from '../src/api'
 import ApiInsightBase from '../src/apiinsightbase'
 import ApiInsight from '../src/apiinsight'
-import {
-  BCH_BLOCKDOZER_MAINNET_URL,
-  BCH_BLOCKDOZER_TESTNET_URL
-} from '../src/coins/bch'
-import { BSV_BCHSVEXPLORER_MAINNET_URL } from '../src/coins/bsv'
 
 describe('insight', () => {
+  it('should error because url not provided when creating unknown coin', () => {
+    expect(() => {
+      // $FlowFixMe
+      Insight.create({ coin: 'myown', network: 'testnet', url: '' })
+    }).toThrow()
+  })
+
   it('should create bsv default', () => {
     const bsv = Insight.create({ coin: 'bsv' })
     expect(bsv).toBeDefined()
@@ -18,7 +20,7 @@ describe('insight', () => {
     expect((bsv: IInsightApiBasic)).toBeDefined()
     expect(bsv.coin).toBe('bsv')
     expect(bsv.network).toBe('mainnet')
-    expect(bsv.url).toBe(BSV_BCHSVEXPLORER_MAINNET_URL)
+    expect(bsv.url.length).toBeGreaterThan(0)
   })
   it('should create bsv mainnet', () => {
     const bsv = Insight.create({ coin: 'bsv', network: 'mainnet' })
@@ -27,7 +29,7 @@ describe('insight', () => {
     expect((bsv: IInsightApiBasic)).toBeDefined()
     expect(bsv.coin).toBe('bsv')
     expect(bsv.network).toBe('mainnet')
-    expect(bsv.url).toBe(BSV_BCHSVEXPLORER_MAINNET_URL)
+    expect(bsv.url.length).toBeGreaterThan(0)
   })
   it('should error because there is no bsv testnet yet', () => {
     expect(() => {
@@ -54,7 +56,7 @@ describe('insight', () => {
     expect((bch: IInsightApiBasic)).toBeDefined()
     expect(bch.coin).toBe('bch')
     expect(bch.network).toBe('mainnet')
-    expect(bch.url).toBe(BCH_BLOCKDOZER_MAINNET_URL)
+    expect(bch.url.length).toBeGreaterThan(0)
   })
   it('should create bch mainnet', () => {
     const bch = Insight.create({ coin: 'bch', network: 'mainnet' })
@@ -63,7 +65,7 @@ describe('insight', () => {
     expect((bch: IInsightApiBasic)).toBeDefined()
     expect(bch.coin).toBe('bch')
     expect(bch.network).toBe('mainnet')
-    expect(bch.url).toBe(BCH_BLOCKDOZER_MAINNET_URL)
+    expect(bch.url.length).toBeGreaterThan(0)
   })
   it('should create bch testnet', () => {
     const bch = Insight.create({ coin: 'bch', network: 'testnet' })
@@ -72,7 +74,7 @@ describe('insight', () => {
     expect((bch: IInsightApiBasic)).toBeDefined()
     expect(bch.coin).toBe('bch')
     expect(bch.network).toBe('testnet')
-    expect(bch.url).toBe(BCH_BLOCKDOZER_TESTNET_URL)
+    expect(bch.url.length).toBeGreaterThan(0)
   })
   it('should create bch with custom url', () => {
     const bch = Insight.create({

@@ -35,6 +35,21 @@ Urls.push({
   url: BCH_BLOCKDOZER_TESTNET_URL
 })
 
+// Urls.push({
+//   isDefault: false,
+//   name: 'BCH_BITPAY_MAINNET_URL',
+//   coin: thiscoin,
+//   network: 'mainnet',
+//   url: 'https://bch-insight.bitpay.com/api'
+// })
+// Urls.push({
+//   isDefault: false,
+//   name: 'BCH_BITPAY_TESTNET_URL',
+//   coin: thiscoin,
+//   network: 'testnet',
+//   url: 'https://test-bch-insight.bitpay.com/api'
+// })
+
 /**
  * API for BCH Insight nodes
  * @param {string} url Insight API URL

@@ -14,19 +14,22 @@ export const Urls: ApiUrl[] = []
  * @param {Coin} coin
  * @param {Network} network
  */
-export const findUrl = (coin: Coin, network: Network) => {
-  let foundUrl: ApiUrl
+export const findUrl = (coin: Coin, network: Network): ?ApiUrl => {
+  let foundUrl: ?ApiUrl
   const found = Urls.filter(u => u.coin === coin && u.network === network)
-  if (found.length === 1) {
+  if (found.length === 0) {
+    foundUrl = null
+  } else if (found.length === 1) {
     foundUrl = found[0]
   } else {
     // found multiple candidates, find any default
-    const foundDefault = found.filter(u => u.isDefault)
-    if (foundDefault) {
-      foundUrl = foundDefault[0]
+    const foundDefaults = found.filter(u => u.isDefault === true)
+    if (foundDefaults.length > 0) {
+      foundUrl = foundDefaults[0]
+    } else {
+      // no defaults, just return the first one
+      foundUrl = found[0]
     }
-    // no defaults, just return the first one
-    foundUrl = found[0]
   }
   return foundUrl
 }

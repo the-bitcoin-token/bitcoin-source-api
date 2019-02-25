@@ -1,5 +1,6 @@
 export default {
   name: 'BCH Testnet',
+  notes: 'bitpay always returns cachaddr format',
   apiconfig: { coin: 'bch', network: 'testnet' },
   skipCheck: () => describe,
   mnemonic:

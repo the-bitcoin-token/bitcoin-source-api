@@ -18,7 +18,6 @@ export const skipBigBlocks = (api, testName) => {
     api instanceof ApiInsightBase &&
     (testName === 'getBlock' || testName === 'getRawBlock')
   ) {
-    console.log(`skipping ${api.coin} > ${testName}`)
     return true
   }
   return false

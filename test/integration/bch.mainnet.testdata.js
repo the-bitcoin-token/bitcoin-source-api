@@ -2,6 +2,7 @@ import { boolToDescribeFunction, skipSendTransaction } from './util'
 
 export default {
   name: 'BCH Mainnet',
+  notes: 'bitpay always expects cachaddr format',
   apiconfig: { coin: 'bch', network: 'mainnet' },
   skipCheck: (api, testName) =>
     boolToDescribeFunction(skipSendTransaction(api, testName)),
