@@ -4,15 +4,33 @@ import { Insight } from '../../src'
 import ApiInsightBase from '../../src/apiinsightbase'
 import ApiInsight from '../../src/apiinsight'
 
-export const boolToDescribeFunction = skipIfTrue =>
-  skipIfTrue ? describe.skip : describe
+/**
+ * converts boolean to test runner function
+ * @param {boolean} runIfTrue 
+ */
+export const ifRunTest = runIfTrue => (runIfTrue ? describe : describe.skip)
 
-export const skipSendTransaction = (api, testName) => {
+/**
+ * runs all tests
+ */
+export const runAllTests = () => true
+
+/**
+ * true if test is not the sendTransaction test
+ * @param {ApiInsight} api 
+ * @param {string} testName 
+ */
+export const isSendTransactionTest = (api, testName) => {
   if (testName === 'sendTransaction') return true
   return false
 }
 
-export const skipBigBlocks = (api, testName) => {
+/**
+ * true if big block test is being run and coin does not support it
+ * @param {ApiInsight} api 
+ * @param {string} testName 
+ */
+export const isBigBlockTest = (api, testName) => {
   if (api instanceof ApiInsight) return false
   if (
     api instanceof ApiInsightBase &&

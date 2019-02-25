@@ -1,4 +1,4 @@
-import { boolToDescribeFunction, skipSendTransaction } from './util'
+import { isSendTransactionTest } from './util'
 
 export default {
   name: 'BTC Testnet',
@@ -7,8 +7,7 @@ export default {
     network: 'testnet',
     url: 'https://test-insight.bitpay.com/api'
   },
-  skipCheck: (api, testName) =>
-    boolToDescribeFunction(skipSendTransaction(api, testName)),
+  runWhen: (api, testName) => !isSendTransactionTest(api, testName),
   mnemonic:
     'rail install size scorpion orchard kingdom vacuum collect pencil element fall enhance media island medal',
   testAddress: 'n3x7vJA1NcSV2oFJudWLp6pgB4D28wchVr',

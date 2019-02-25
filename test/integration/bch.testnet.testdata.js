@@ -1,8 +1,10 @@
+import { runAllTests } from './util'
+
 export default {
   name: 'BCH Testnet',
   notes: 'bitpay always returns cachaddr format',
   apiconfig: { coin: 'bch', network: 'testnet' },
-  skipCheck: () => describe,
+  runWhen: runAllTests,
   mnemonic:
     'rail install size scorpion orchard kingdom vacuum collect pencil element fall enhance media island medal',
   testAddress: 'my9uLPBr38a4ayEkaZfcaiQArwTzYSho3y',

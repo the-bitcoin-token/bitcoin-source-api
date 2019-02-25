@@ -1,12 +1,10 @@
-import { skipSendTransaction, skipBigBlocks } from './util'
+import { isSendTransactionTest, isBigBlockTest } from './util'
 
 export default {
   name: 'BSV Mainnet',
   apiconfig: { coin: 'bsv', network: 'mainnet' },
-  skipCheck: (api, testName) =>
-    skipBigBlocks(api, testName) || skipSendTransaction(api, testName)
-      ? describe.skip
-      : describe,
+  runWhen: (api, testName) =>
+    !isBigBlockTest(api, testName) && !isSendTransactionTest(api, testName),
   mnemonic: null,
   testAddress: '1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1',
   addressCountMinimum: 15,

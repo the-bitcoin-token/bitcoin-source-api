@@ -1,11 +1,10 @@
-import { boolToDescribeFunction, skipSendTransaction } from './util'
+import { isSendTransactionTest } from './util'
 
 export default {
   name: 'BCH Mainnet',
   notes: 'bitpay always expects cachaddr format',
   apiconfig: { coin: 'bch', network: 'mainnet' },
-  skipCheck: (api, testName) =>
-    boolToDescribeFunction(skipSendTransaction(api, testName)),
+  runWhen: (api, testName) => !isSendTransactionTest(api, testName),
   testAddress: '1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1',
   addressCountMinimum: 15,
   txId: '766a4a171acaea360823d6feeb020c899ed582c12e8919bbe7610ade47b51e9b',

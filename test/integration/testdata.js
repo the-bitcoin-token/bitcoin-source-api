@@ -8,7 +8,7 @@ import bchtest from './bch.testnet.testdata'
 import bsvmain from './bsv.mainnet.testdata'
 import btctest from './btc.testnet.testdata'
 
-// const testdata = [btctest]
+// const testdata = [bchtest]
 const testdata = [btctest, bchtest, bchmain, bsvmain]
 
 export { testdata as default }
