@@ -6,6 +6,21 @@ import data from './testdata'
 import { isBigBlockTest, isSendTransactionTest, ifRunTest, runAllTests } from './util'
 import { renameProperty } from '../../src/util'
 
+describe('cashaddr', () => {
+  it('should be true', () => {
+    //, 'testnet', Address.PayToPublicKeyHash
+    // livenet legacy n28S35tqEMbt6vNad7A5K3mZ7vdn8dZ86X
+    // testnet cashaddr qr3pswmv0t332gwaedmuhqcp59gswsu2ysdn664dvs
+    const testAddress = 'bchtest:qr3pswmv0t332gwaedmuhqcp59gswsu2ysdn664dvs'
+    //const testAddress = 'n28S35tqEMbt6vNad7A5K3mZ7vdn8dZ86X'
+    const cashAddress = 'bchtest:qr3pswmv0t332gwaedmuhqcp59gswsu2ysdn664dvs'
+    const addr = Address.fromString(testAddress, 'testnet', Address.PayToPublicKeyHash, Address.CashAddrFormat)
+    console.log(addr.toObject())
+    const saddr = addr.toString(Address.CashAddrFormat)
+    expect(saddr).toBe(cashAddress)
+  })
+})
+
 describe('test isBigBlockTest', () => {
   it('should not skip full api getBlock', () => {
     expect(isBigBlockTest(bch(), 'getBlock')).toBeFalsy()
@@ -39,14 +54,25 @@ describe('test ifRunTest', () => {
 // eslint-disable-next-line no-restricted-syntax
 for (const testdata of data) {
   testdata.api = Insight.create(testdata.apiconfig)
-  // testdata.testAddressExpected = new Address(
-  //   testdata.testAddress,
-  //   testdata.apiconfig.network
-  // ).toString(
-  //   testdata.expectedAddressFormat === 'cashaddr' ? 'cashaddr' : 'legacy'
-  // )
+  // testAddress should always be legacy address. if expecting cashaddr then convert it here
+  // apis do not use prefix so remove it from expected address
+  if (testdata.apiconfig.coin === 'bch') {
+    testdata.api.addressFormat = testdata.expectedAddressFormat
+  }
+
   const checkSkip = testName =>
     ifRunTest(testdata.runWhen(testdata.api, testName))
+
+  const toExpectedAddressFormat = address => {
+    if (address.length === 0) return ''
+    return Address.fromString(
+      address,
+      testdata.apiconfig.network,
+      Address.PayToPublicKeyHash
+    ).toString(
+      testdata.expectedAddressFormat === 'cashaddr' ? 'cashaddr' : 'legacy'
+    ).replace('bchtest:','').replace('bitcoincash:','')
+  }
 
   describe(testdata.name, () => {
     describe('testing testdata', () => {
@@ -61,17 +87,15 @@ for (const testdata of data) {
 
     checkSkip('getAddress')('getAddress', () => {
       it('Should retrieve information about the test address', async () => {
-        console.log(`${testdata.testAddress} ${testdata.apiconfig.network}`)
+        // console.log(`${testdata.testAddress} ${testdata.apiconfig.network}`)
         // console.log(
-        //   `A =>${new Address(testdata.testAddress, testdata.apiconfig.network)}`
+        //   `A =>${(new Address(testdata.testAddress, testdata.apiconfig.network)).toString(Address.CashAddrFormat)}`
         // )
         const res = await testdata.api.getAddress(
           new Address(testdata.testAddress, testdata.apiconfig.network)
         )
         expect(res).toBeDefined()
-        // bitpay testnet makes everything CashAddr!
-        // todo: fix bitpay
-        // expect(res.addrStr).toBe(testdata.testAddressExpected)
+        expect(res.addrStr).toBe(toExpectedAddressFormat(testdata.testAddress))
         expect(res.balance).toBeDefined()
         expect(res.balanceSat).toBeDefined()
         expect(res.totalReceived).toBeDefined()
@@ -281,7 +305,7 @@ for (const testdata of data) {
           outputIndex: testdata.txOutput.outputIndex
         })
         expect(res.spent).toBeDefined()
-        expect(res.address).toBe(testdata.txOutput.address)
+        expect(res.address).toBe(toExpectedAddressFormat(testdata.txOutput.address))
         expect(res.txId).toBe(testdata.txOutput.txId)
         expect(res.vout).toBe(testdata.txOutput.outputIndex)
         expect(res.scriptPubKey).toBe(testdata.txOutput.scriptPubKey)
@@ -296,6 +320,11 @@ for (const testdata of data) {
 
     checkSkip('sendTransaction')('sendTransaction', () => {
       it('should build and broadcast a transaction', async () => {
+        // if (testdata.expectedAddressFormat === 'cashaddr') {
+        //   Address.DefaultFormat = Address.CashAddrFormat
+        // } else {
+        //   Address.DefaultFormat = Address.LegacyFormat
+        // }
         const hdPrivateKey = Mnemonic(testdata.mnemonic).toHDPrivateKey()
         const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
         const address = derived.publicKey.toAddress(testdata.apiconfig.network)
@@ -307,6 +336,8 @@ for (const testdata of data) {
             renameProperty('script', 'scriptPubKey', u)
           )
         )
+
+        console.log(utxos)
 
         const transaction = new Transaction()
           .from(utxos)
