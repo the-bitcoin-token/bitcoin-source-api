@@ -127,11 +127,11 @@ export default class ApiInsightBase implements IInsightApiBasic {
 
   async getTxo(outputId: OutputId): Promise<Txo> {
     const transaction = await this.getTransaction(outputId.txId)
-    const output = transaction.vout[outputId.outputNumber]
+    const output = transaction.vout[outputId.outputIndex]
     // op_return output does not have an addresses key
     const address = (output.scriptPubKey.addresses || [''])[0]
     const { txId } = outputId
-    const vout = outputId.outputNumber
+    const vout = outputId.outputIndex
     const amount = parseFloat(output.value)
     const satoshis = amount * 1e8
     const height = transaction.blockheight

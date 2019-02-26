@@ -278,12 +278,12 @@ for (const testdata of data) {
       it('Should return a transaction output', async () => {
         const res = await testdata.api.getTxo({
           txId: testdata.txOutput.txId,
-          outputNumber: testdata.txOutput.outputNumber
+          outputIndex: testdata.txOutput.outputIndex
         })
         expect(res.spent).toBeDefined()
         expect(res.address).toBe(testdata.txOutput.address)
         expect(res.txId).toBe(testdata.txOutput.txId)
-        expect(res.vout).toBe(testdata.txOutput.outputNumber)
+        expect(res.vout).toBe(testdata.txOutput.outputIndex)
         expect(res.scriptPubKey).toBe(testdata.txOutput.scriptPubKey)
         expect(res.amount).toBe(testdata.txOutput.amount)
         expect(res.satoshis).toBe(testdata.txOutput.satoshis)
