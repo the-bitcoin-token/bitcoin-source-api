@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-new */
 
 import Insight from '../src/insight'
 import { IInsightApiBasic } from '../src/api'
@@ -21,6 +22,11 @@ describe('insight', () => {
     expect(bsv.coin).toBe('bsv')
     expect(bsv.network).toBe('mainnet')
     expect(bsv.url.length).toBeGreaterThan(0)
+  })
+  it('should complain if no url passed in to base', () => {
+    expect(() => {
+      new ApiInsight('bsv', undefined, '')
+    }).toThrow()
   })
   it('should create bsv mainnet', () => {
     const bsv = Insight.create('bsv', 'mainnet')

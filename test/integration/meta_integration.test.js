@@ -1,13 +1,13 @@
 import { isBigBlockTest, isSendTransactionTest, runAllTests } from './util'
 
-import { bch, bsv } from '../../src'
+import Insight from '../../src'
 
 describe('test isBigBlockTest', () => {
   it('should not skip full api getBlock', () => {
-    expect(isBigBlockTest(bch(), 'getBlock')).toBeFalsy()
+    expect(isBigBlockTest(Insight.create('bch'), 'getBlock')).toBeFalsy()
   })
   it('should skip big blocks', () => {
-    expect(isBigBlockTest(bsv(), 'getBlock')).toBeTruthy()
+    expect(isBigBlockTest(Insight.create('bsv'), 'getBlock')).toBeTruthy()
   })
 })
 describe('test isSendTransactionTest', () => {

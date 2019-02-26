@@ -7,13 +7,7 @@ import axios from 'axios'
 import { Address, Transaction } from 'bitcoinsource'
 import { IInsightApi, IInsightApiBasic } from './api'
 import ApiError from './error'
-import type {
-  Coin,
-  Network,
-  OutputId,
-  TransactionId,
-  Txo
-} from './types'
+import type { Coin, Network, OutputId, TransactionId, Txo } from './types'
 import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
 
 /**

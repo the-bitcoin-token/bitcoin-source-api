@@ -1,7 +1,7 @@
 // @flow
 
 import { Block, Mnemonic, Transaction, Address } from 'bitcoinsource'
-import { Insight } from '../../src'
+import Insight from '../../src'
 import data from './testdata'
 import { renameProperty } from '../../src/util'
 import ApiInsight from '../../src/apiinsight'
