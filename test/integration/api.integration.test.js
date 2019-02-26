@@ -1,77 +1,41 @@
 // @flow
 
 import { Block, Mnemonic, Transaction, Address } from 'bitcoinsource'
-import { Insight, bch, bsv } from '../../src'
+import { Insight } from '../../src'
 import data from './testdata'
-import { isBigBlockTest, isSendTransactionTest, ifRunTest, runAllTests } from './util'
 import { renameProperty } from '../../src/util'
+import ApiInsight from '../../src/apiinsight'
 
-describe('test isBigBlockTest', () => {
-  it('should not skip full api getBlock', () => {
-    expect(isBigBlockTest(bch(), 'getBlock')).toBeFalsy()
-  })
-  it('should skip big blocks', () => {
-    expect(isBigBlockTest(bsv(), 'getBlock')).toBeTruthy()
-  })
-})
-describe('test isSendTransactionTest', () => {
-  it('should be true when sending transaction', () => {
-    expect(isSendTransactionTest(null, 'sendTransaction')).toBeTruthy()
-  })
-  it('should be false when not sending tx', () => {
-    expect(isSendTransactionTest(null, 'getBlock')).toBeFalsy()
-  })
-})
-describe('test runAllTests', () => {
-  it('should be true', () => {
-    expect(runAllTests()).toBeTruthy()
-  })
-})
-describe('test ifRunTest', () => {
-  it('should run if true', () => {
-    expect(ifRunTest(true)).toBe(describe)
-  })
-  it('should not run if false', () => {
-    expect(ifRunTest(false)).toBe(describe.skip)
-  })
-})
+data.forEach(testdata => {
+  const api = Insight.create(
+    testdata.apiconfig.coin,
+    testdata.apiconfig.network,
+    testdata.apiconfig.url
+  )
 
-// eslint-disable-next-line no-restricted-syntax
-for (const testdata of data) {
-  testdata.api = Insight.create(testdata.apiconfig)
-  // testdata.testAddressExpected = new Address(
-  //   testdata.testAddress,
-  //   testdata.apiconfig.network
-  // ).toString(
-  //   testdata.expectedAddressFormat === 'cashaddr' ? 'cashaddr' : 'legacy'
-  // )
-  const checkSkip = testName =>
-    ifRunTest(testdata.runWhen(testdata.api, testName))
+  const ifRunTest = (testName, func) =>
+    testdata.runWhen(api, testName)
+      ? describe(testName, func)
+      : describe.skip(testName, func)
 
   describe(testdata.name, () => {
     describe('testing testdata', () => {
       it('must conform to a test input object that we are expecting', () => {
         expect(testdata).toBeDefined()
-        expect(testdata.api).toBeDefined()
+        expect(api).toBeDefined()
         expect(testdata.apiconfig.coin).toBeDefined()
         expect(testdata.apiconfig.network).toBeDefined()
         expect(testdata.runWhen).toBeDefined()
       })
     })
 
-    checkSkip('getAddress')('getAddress', () => {
+    ifRunTest('getAddress', () => {
       it('Should retrieve information about the test address', async () => {
-        console.log(`${testdata.testAddress} ${testdata.apiconfig.network}`)
-        // console.log(
-        //   `A =>${new Address(testdata.testAddress, testdata.apiconfig.network)}`
-        // )
-        const res = await testdata.api.getAddress(
+        const res = await api.getAddress(
           new Address(testdata.testAddress, testdata.apiconfig.network)
         )
         expect(res).toBeDefined()
-        // bitpay testnet makes everything CashAddr!
-        // todo: fix bitpay
-        // expect(res.addrStr).toBe(testdata.testAddressExpected)
+        expect(res.addrStr).toBe(testdata.testAddress)
         expect(res.balance).toBeDefined()
         expect(res.balanceSat).toBeDefined()
         expect(res.totalReceived).toBeDefined()
@@ -89,9 +53,9 @@ for (const testdata of data) {
       }, 9000)
     })
 
-    checkSkip('getBalance')('getBalance', () => {
+    ifRunTest('getBalance', () => {
       it('Should retrieve the balance of the test address', async () => {
-        const res = await testdata.api.getBalance(
+        const res = await api.getBalance(
           new Address(testdata.testAddress, testdata.apiconfig.network)
         )
         expect(res).toBeDefined()
@@ -99,9 +63,11 @@ for (const testdata of data) {
       }, 9000)
     })
 
-    checkSkip('getBlock')('getBlock', () => {
+    ifRunTest('getBlock', () => {
+      // $FlowFixMe
+      const fullapi: ApiInsight = api
       it('Should retrieve the block for a given block hash', async () => {
-        const res = await testdata.api.getBlock(testdata.getBlockHash)
+        const res = await fullapi.getBlock(testdata.getBlockHash)
         expect(res).toBeDefined()
         expect(res.hash).toBe(testdata.getBlockHash)
         expect(res.size).toBeGreaterThan(0)
@@ -123,15 +89,15 @@ for (const testdata of data) {
       }, 10000)
 
       it('Should retrieve the block for a given block number', async () => {
-        const res = await testdata.api.getBlock(1)
+        const res = await fullapi.getBlock(1)
         expect(res).toBeDefined()
         expect(res.hash).toBe(testdata.genesisBlockHash)
       }, 10000)
     })
 
-    checkSkip('getBlockHash')('getBlockHash', () => {
+    ifRunTest('getBlockHash', () => {
       it('Should retrieve the block hash for a given block height', async () => {
-        const res = await testdata.api.getBlockHash(1)
+        const res = await api.getBlockHash(1)
         expect(res).toBeDefined()
         expect(res.indexOf(' ')).toBe(-1)
         expect(res.length).toBe(64)
@@ -139,32 +105,34 @@ for (const testdata of data) {
       })
     })
 
-    checkSkip('getLastBlockHash')('getLastBlockHash', () => {
+    ifRunTest('getLastBlockHash', () => {
       it('Should retrieve the latest block for a given block hash', async () => {
-        const res = await testdata.api.getLastBlockHash()
+        const res = await api.getLastBlockHash()
         expect(res).toBeDefined()
         expect(res.indexOf(' ')).toBe(-1)
         expect(res.length).toBe(64)
       })
     })
 
-    checkSkip('getRawBlock')('getRawBlock', () => {
+    ifRunTest('getRawBlock', () => {
+      // $FlowFixMe
+      const fullapi: ApiInsight = api
       it('Should retrieve the raw block for a given block hash', async () => {
-        const res = await testdata.api.getRawBlock(testdata.getRawBlockHash)
+        const res = await fullapi.getRawBlock(testdata.getRawBlockHash)
         expect(res).toBeDefined()
         expect(res.indexOf(' ')).toBe(-1)
         expect(res).toBe(testdata.getRawBlockContents)
       }, 9000)
 
       it('Should retrieve the block for a given block height', async () => {
-        const res = await testdata.api.getRawBlock(1)
+        const res = await fullapi.getRawBlock(1)
         expect(res).toBeDefined()
         expect(res.indexOf(' ')).toBe(-1)
         expect(res).toBe(testdata.genesisBlockContents)
       }, 9000)
 
       it('Should parse a block to JSON', async () => {
-        const res = await testdata.api.getRawBlock(testdata.getRawBlockHash)
+        const res = await fullapi.getRawBlock(testdata.getRawBlockHash)
         const blockBuf = Buffer.from(res, 'hex')
         const block = Block.fromBuffer(blockBuf)
         expect(block).toBeDefined()
@@ -173,9 +141,9 @@ for (const testdata of data) {
       }, 9000)
     })
 
-    checkSkip('getTransaction')('getTransaction', () => {
+    ifRunTest('getTransaction', () => {
       it('Should retrieve the transaction json for a given id', async () => {
-        const res = await testdata.api.getTransaction(testdata.txId)
+        const res = await api.getTransaction(testdata.txId)
         expect(res).toBeDefined()
         expect(res.txid).toBe(testdata.txId)
         expect(res.version).toBeDefined()
@@ -209,7 +177,7 @@ for (const testdata of data) {
         expect(res.fees).toBeDefined()
       })
       it('Should retrieve the transaction json for a coinbase tx', async () => {
-        const res = await testdata.api.getTransaction(testdata.coinbaseTxId)
+        const res = await api.getTransaction(testdata.coinbaseTxId)
         expect(res).toBeDefined()
         expect(res.txid).toBe(testdata.coinbaseTxId)
         expect(res.version).toBeDefined()
@@ -245,18 +213,18 @@ for (const testdata of data) {
       })
     })
 
-    checkSkip('getRawTransaction')('getRawTransaction', () => {
+    ifRunTest('getRawTransaction', () => {
       it('Should retrieve the raw transaction for a given transaction id', async () => {
-        const res = await testdata.api.getRawTransaction(testdata.txId)
+        const res = await api.getRawTransaction(testdata.txId)
         expect(res).toBeDefined()
         expect(res.indexOf(' ')).toBe(-1)
         expect(res.length).toBeGreaterThan(60)
       })
     })
 
-    checkSkip('getUtxos')('getUtxos', () => {
+    ifRunTest('getUtxos', () => {
       it('Should retrieve the utxo set of the first test address', async () => {
-        const res = await testdata.api.getUtxos(
+        const res = await api.getUtxos(
           new Address(testdata.testAddress, testdata.apiconfig.network)
         )
         expect(res).toBeDefined()
@@ -274,9 +242,9 @@ for (const testdata of data) {
       }, 15000)
     })
 
-    checkSkip('getTxo')('getTxo', () => {
+    ifRunTest('getTxo', () => {
       it('Should return a transaction output', async () => {
-        const res = await testdata.api.getTxo({
+        const res = await api.getTxo({
           txId: testdata.txOutput.txId,
           outputIndex: testdata.txOutput.outputIndex
         })
@@ -294,13 +262,13 @@ for (const testdata of data) {
       })
     })
 
-    checkSkip('sendTransaction')('sendTransaction', () => {
+    ifRunTest('sendTransaction', () => {
       it('should build and broadcast a transaction', async () => {
         const hdPrivateKey = Mnemonic(testdata.mnemonic).toHDPrivateKey()
         const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
         const address = derived.publicKey.toAddress(testdata.apiconfig.network)
         const amount = Transaction.DUST_AMOUNT
-        const utxos = (await testdata.api.getUtxos(address)).map(u =>
+        const utxos = (await api.getUtxos(address)).map(u =>
           renameProperty(
             'vout',
             'outputIndex',
@@ -320,10 +288,10 @@ for (const testdata of data) {
         expect(transaction.inputs.length).toBeGreaterThan(0)
         expect(Array.isArray(transaction.outputs)).toBe(true)
         expect(transaction.outputs.length).toBeGreaterThan(0)
-        const res = await testdata.api.sendTransaction(transaction)
+        const res = await api.sendTransaction(transaction)
         expect(res).toBeDefined()
         expect(res.txId).toBeDefined()
       })
     })
   })
-}
+})

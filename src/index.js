@@ -1,31 +1,14 @@
 // @flow
+import type { Network } from './types'
 
 import Insight from './insight'
-import type { ApiConfiguration } from './types'
 
-import {
-  BchInsightApi,
-  BCH_BLOCKDOZER_MAINNET_URL,
-  BCH_BLOCKDOZER_TESTNET_URL
-} from './coins/bch'
-
-import { BsvInsightApi, BSV_BCHSVEXPLORER_MAINNET_URL } from './coins/bsv'
-
-function bch(config: ?ApiConfiguration) {
-  return Insight.create({ ...(config || {}), coin: 'bch' })
+function bch(network?: Network, url?: string) {
+  return Insight.create('bch', network, url)
 }
 
-function bsv(config: ?ApiConfiguration) {
-  return Insight.create({ ...(config || {}), coin: 'bsv' })
+function bsv(network?: Network, url?: string) {
+  return Insight.create('bsv', network, url)
 }
 
-export {
-  Insight,
-  bsv,
-  bch,
-  BchInsightApi,
-  BCH_BLOCKDOZER_MAINNET_URL,
-  BCH_BLOCKDOZER_TESTNET_URL,
-  BsvInsightApi,
-  BSV_BCHSVEXPLORER_MAINNET_URL
-}
+export { Insight, bsv, bch }

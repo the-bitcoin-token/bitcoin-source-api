@@ -5,7 +5,6 @@
 /* eslint no-param-reassign: "off" */
 
 import type { Coin, Network } from '../types'
-import { Urls } from '../urls'
 import ApiInsight from '../apiinsight'
 
 const thiscoin: Coin = 'bch'
@@ -20,42 +19,20 @@ export const BCH_BLOCKDOZER_MAINNET_URL = 'https://bch.blockdozer.com/api'
  */
 export const BCH_BLOCKDOZER_TESTNET_URL = 'https://tbch.blockdozer.com/api'
 
-Urls.push({
-  isDefault: true,
-  name: 'BCH_BLOCKDOZER_MAINNET_URL',
-  coin: thiscoin,
-  network: 'mainnet',
-  url: BCH_BLOCKDOZER_MAINNET_URL
-})
-Urls.push({
-  isDefault: true,
-  name: 'BCH_BLOCKDOZER_TESTNET_URL',
-  coin: thiscoin,
-  network: 'testnet',
-  url: BCH_BLOCKDOZER_TESTNET_URL
-})
-
-// Urls.push({
-//   isDefault: false,
-//   name: 'BCH_BITPAY_MAINNET_URL',
-//   coin: thiscoin,
-//   network: 'mainnet',
-//   url: 'https://bch-insight.bitpay.com/api'
-// })
-// Urls.push({
-//   isDefault: false,
-//   name: 'BCH_BITPAY_TESTNET_URL',
-//   coin: thiscoin,
-//   network: 'testnet',
-//   url: 'https://test-bch-insight.bitpay.com/api'
-// })
+const BCH_BITPAY_MAINNET_URL = 'https://bch-insight.bitpay.com/api'
+const BCH_BITPAY_TESTNET_URL = 'https://test-bch-insight.bitpay.com/api'
 
 /**
  * API for BCH Insight nodes
  * @param {string} url Insight API URL
  */
 export class BchInsightApi extends ApiInsight {
-  constructor(network: Network, url: string) {
-    super(thiscoin, network, url)
+  constructor(network?: Network, url?: string) {
+    const defaultNetwork: Network = network || 'mainnet'
+    const defaultUrl: string =
+      defaultNetwork === 'mainnet'
+        ? BCH_BLOCKDOZER_MAINNET_URL
+        : BCH_BLOCKDOZER_TESTNET_URL
+    super(thiscoin, network, url || defaultUrl)
   }
 }

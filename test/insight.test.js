@@ -14,7 +14,7 @@ describe('insight', () => {
   })
 
   it('should create bsv default', () => {
-    const bsv = Insight.create({ coin: 'bsv' })
+    const bsv = Insight.create('bsv')
     expect(bsv).toBeDefined()
     expect(bsv).toBeInstanceOf(ApiInsightBase)
     expect((bsv: IInsightApiBasic)).toBeDefined()
@@ -23,7 +23,7 @@ describe('insight', () => {
     expect(bsv.url.length).toBeGreaterThan(0)
   })
   it('should create bsv mainnet', () => {
-    const bsv = Insight.create({ coin: 'bsv', network: 'mainnet' })
+    const bsv = Insight.create('bsv', 'mainnet')
     expect(bsv).toBeDefined()
     expect(bsv).toBeInstanceOf(ApiInsightBase)
     expect((bsv: IInsightApiBasic)).toBeDefined()
@@ -33,14 +33,15 @@ describe('insight', () => {
   })
   it('should error because there is no bsv testnet yet', () => {
     expect(() => {
-      Insight.create({ coin: 'bsv', network: 'testnet' })
+      Insight.create('bsv', 'testnet')
     }).toThrow()
   })
   it('should create bsv with custom url', () => {
-    const bsv = Insight.create({
-      coin: 'bsv',
-      url: 'https://ireallyknowwhatiamdoing.ipromise.com'
-    })
+    const bsv = Insight.create(
+      'bsv',
+      undefined,
+      'https://ireallyknowwhatiamdoing.ipromise.com'
+    )
     expect(bsv).toBeDefined()
     expect(bsv).toBeInstanceOf(ApiInsightBase)
     expect((bsv: IInsightApiBasic)).toBeDefined()
@@ -50,7 +51,7 @@ describe('insight', () => {
   })
 
   it('should create bch default', () => {
-    const bch = Insight.create({ coin: 'bch' })
+    const bch = Insight.create('bch')
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
     expect((bch: IInsightApiBasic)).toBeDefined()
@@ -59,7 +60,7 @@ describe('insight', () => {
     expect(bch.url.length).toBeGreaterThan(0)
   })
   it('should create bch mainnet', () => {
-    const bch = Insight.create({ coin: 'bch', network: 'mainnet' })
+    const bch = Insight.create('bch', 'mainnet')
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
     expect((bch: IInsightApiBasic)).toBeDefined()
@@ -68,7 +69,7 @@ describe('insight', () => {
     expect(bch.url.length).toBeGreaterThan(0)
   })
   it('should create bch testnet', () => {
-    const bch = Insight.create({ coin: 'bch', network: 'testnet' })
+    const bch = Insight.create('bch', 'testnet')
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
     expect((bch: IInsightApiBasic)).toBeDefined()
@@ -77,10 +78,11 @@ describe('insight', () => {
     expect(bch.url.length).toBeGreaterThan(0)
   })
   it('should create bch with custom url', () => {
-    const bch = Insight.create({
-      coin: 'bch',
-      url: 'https://ireallyknowwhatiamdoing.ipromise.com'
-    })
+    const bch = Insight.create(
+      'bch',
+      undefined,
+      'https://ireallyknowwhatiamdoing.ipromise.com'
+    )
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
     expect((bch: IInsightApiBasic)).toBeDefined()

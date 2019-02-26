@@ -1,30 +1,18 @@
 // @flow
-/* eslint-disable no-case-declarations */
 
-import type { ApiConfiguration } from './types'
+import type { Coin, Network } from './types'
+import { IInsightApiBasic } from './api'
 import ApiInsightBase from './apiinsightbase'
 import ApiInsight from './apiinsight'
 import { BsvInsightApi } from './coins/bsv'
 import { BchInsightApi } from './coins/bch'
 
-function configErrorMessage(config: ApiConfiguration): string {
+function configErrorMessage(coin: Coin, network: Network, url: string): string {
   let errorMessage = ``
-  if (!config.url) {
-    errorMessage = `Provide a url to call for coin ${config.coin}`
+  if (!url) {
+    errorMessage = `Provide a url to call for coin ${coin}`
   }
   return errorMessage
-}
-
-/**
- * create a configuration with default values
- * @param {ApiConfiguration} config
- */
-function defaultConfiguration(config: ApiConfiguration) {
-  return {
-    coin: config.coin,
-    network: config.network || 'mainnet',
-    url: config.url || ''
-  }
 }
 
 /**
@@ -47,26 +35,20 @@ const knownCoins = {
  *  example: Insight.create({coin:'throwsErrorBecauseNoUrl'})
  */
 export default class Insight {
-  static create(config: ApiConfiguration): ApiInsightBase {
-    const defaultConfig = defaultConfiguration(config)
+  static create(coin: Coin, network?: Network, url?: string): IInsightApiBasic {
+    const defaultNetwork: Network = network || 'mainnet'
+    const defaultUrl: string = url || ''
     let api: ApiInsightBase
-    if (config.coin in knownCoins) {
+    if (coin in knownCoins) {
       // if we know about the coin then return the concrete subclass
-      api = new knownCoins[config.coin](
-        defaultConfig.network,
-        defaultConfig.url
-      )
+      api = new knownCoins[coin](defaultNetwork, defaultUrl)
     } else {
       // otherwise, validate the config and return a generic api with the config applied
-      const errMessage = configErrorMessage(config)
+      const errMessage = configErrorMessage(coin, defaultNetwork, defaultUrl)
       if (errMessage) {
         throw new Error(errMessage)
       }
-      api = new ApiInsight(
-        defaultConfig.coin,
-        defaultConfig.network,
-        defaultConfig.url
-      )
+      api = new ApiInsight(coin, defaultNetwork, defaultUrl)
     }
     return api
   }

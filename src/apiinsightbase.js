@@ -6,12 +6,10 @@
 import axios from 'axios'
 import { Address, Transaction } from 'bitcoinsource'
 import { IInsightApi, IInsightApiBasic } from './api'
-import { Urls, findUrl } from './urls'
 import ApiError from './error'
 import type {
   Coin,
   Network,
-  ApiUrl,
   OutputId,
   TransactionId,
   Txo
@@ -30,20 +28,12 @@ export default class ApiInsightBase implements IInsightApiBasic {
    *
    * @param {string} url Insight API URL
    */
-  constructor(coin: Coin, network: Network, url: string) {
+  constructor(coin: Coin, network?: Network, url: string) {
     this._coin = coin
-    // mainnet is default network if not specified
     this._network = network || 'mainnet'
     this._url = url
     if (!url) {
-      const foundUrl: ?ApiUrl = findUrl(this._coin, this._network)
-      if (foundUrl) {
-        this._url = foundUrl.url
-      } else {
-        throw new Error(
-          `Cannot find any url for ${this._coin} ${this._network}`
-        )
-      }
+      throw new Error(`Url parameter is required`)
     }
   }
 

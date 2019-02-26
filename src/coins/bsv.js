@@ -5,7 +5,6 @@
 /* eslint no-param-reassign: "off" */
 
 import type { Coin, Network } from '../types'
-import { Urls } from '../urls'
 import ApiInsightBase from '../apiinsightbase'
 
 const thiscoin: Coin = 'bsv'
@@ -15,20 +14,19 @@ const thiscoin: Coin = 'bsv'
  */
 export const BSV_BCHSVEXPLORER_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
-Urls.push({
-  isDefault: true,
-  name: 'BSV_BCHSVEXPLORER_MAINNET_URL',
-  coin: thiscoin,
-  network: 'mainnet',
-  url: BSV_BCHSVEXPLORER_MAINNET_URL
-})
-
 /**
  * API for BSV Insight nodes
  * @param {string} url Insight API URL
  */
 export class BsvInsightApi extends ApiInsightBase {
-  constructor(network: Network, url: string) {
-    super(thiscoin, network, url)
+  constructor(network?: Network, url?: string) {
+    if (network === 'testnet' && !url) {
+      throw new Error(
+        'There is no default api url for BSV testnet. Please provide a url'
+      )
+    }
+    const defaultNetwork: Network = network || 'mainnet'
+    const defaultUrl: string = url || BSV_BCHSVEXPLORER_MAINNET_URL
+    super(thiscoin, network, defaultUrl)
   }
 }
