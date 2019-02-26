@@ -2,7 +2,7 @@
 
 export type OutputId = {|
   txId: string,
-  outputNumber: number
+  outputIndex: number
 |}
 
 export type TransactionId = {|
