@@ -1,6 +1,6 @@
 // @flow
 
-import { Block, Mnemonic, Transaction, Address, Signature  } from 'bitcoinsource'
+import { Block, Mnemonic, Transaction, Address, crypto  } from 'bitcoinsource'
 import Insight from '../../src'
 import data from './testdata'
 import { renameProperty } from '../../src/util'
@@ -275,12 +275,10 @@ data.forEach(testdata => {
             renameProperty('script', 'scriptPubKey', u)
           )
         )
-        const SIGHASH_ALL = 0x01
-        const SIGHASH_FORKID = 0x40
         const sigtype =
           api.coin === 'btc'
-            ? SIGHASH_ALL
-            : SIGHASH_ALL | SIGHASH_FORKID
+            ? crypto.Signature.SIGHASH_ALL
+            : crypto.Signature.SIGHASH_ALL | crypto.Signature.SIGHASH_FORKID
 
         const transaction = new Transaction()
           .from(utxos)
