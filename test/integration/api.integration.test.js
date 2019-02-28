@@ -239,7 +239,7 @@ data.forEach(testdata => {
         // height can be undefined if tx is not confirmed!
         // expect(res[0].height).toBeDefined()
         expect(res[0].confirmations).toBeDefined()
-      }, 15000)
+      }, 30000)
     })
 
     ifRunTest('getTxo', () => {
