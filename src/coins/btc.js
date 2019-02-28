@@ -1,7 +1,4 @@
 // @flow
-/* eslint-disable no-unused-vars, class-methods-use-this */
-/* eslint no-else-return: ["error", { "allowElseIf": true }] */
-/* eslint no-param-reassign: "off" */
 
 import type { Coin, Network } from '../types'
 import ApiInsight from '../apiinsight'
@@ -23,7 +20,7 @@ export const BTC_BITPAY_TESTNET_URL = 'https://test-insight.bitpay.com/api'
  * @param {string} url Insight API URL
  */
 export class BtcInsightApi extends ApiInsight {
-      constructor(network?: Network, url?: string) {
+  constructor(network?: Network, url?: string) {
     const defaultNetwork: Network = network || 'mainnet'
     const defaultUrl: string =
       defaultNetwork === 'mainnet'

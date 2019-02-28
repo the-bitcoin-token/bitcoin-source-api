@@ -1,6 +1,8 @@
 // @flow
+/* eslint-disable no-bitwise */
+/* eslint-disable no-console */
 
-import { Block, Mnemonic, Transaction, Address, crypto  } from 'bitcoinsource'
+import { Block, Mnemonic, Transaction, Address, crypto } from 'bitcoinsource'
 import Insight from '../../src'
 import data from './testdata'
 import { renameProperty } from '../../src/util'
