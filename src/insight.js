@@ -7,6 +7,7 @@ import ApiInsight from './apiinsight'
 import { BsvInsightApi } from './coins/bsv'
 import { BchInsightApi } from './coins/bch'
 import { BtcInsightApi } from './coins/btc'
+import { LtcInsightApi } from './coins/ltc'
 
 function configErrorMessage(coin: Coin, network: Network, url: string): string {
   let errorMessage = ``
@@ -22,7 +23,8 @@ function configErrorMessage(coin: Coin, network: Network, url: string): string {
 const knownCoins = {
   bch: BchInsightApi,
   bsv: BsvInsightApi,
-  btc: BtcInsightApi
+  btc: BtcInsightApi,
+  ltc: LtcInsightApi
 }
 
 /**

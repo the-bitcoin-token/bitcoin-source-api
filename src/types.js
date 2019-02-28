@@ -21,7 +21,7 @@ export type Txo = {|
   spent: boolean
 |}
 
-export type Coin = 'bch' | 'bsv' | 'btc'
+export type Coin = 'bch' | 'bsv' | 'btc' | 'ltc'
 
 export type Network = 'mainnet' | 'testnet'
 

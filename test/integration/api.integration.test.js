@@ -269,7 +269,6 @@ data.forEach(testdata => {
         const hdPrivateKey = Mnemonic(testdata.mnemonic).toHDPrivateKey()
         const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
         const address = derived.publicKey.toAddress(testdata.apiconfig.network)
-        const amount = Transaction.DUST_AMOUNT
         const utxos = (await api.getUtxos(address)).map(u =>
           renameProperty(
             'vout',
@@ -277,16 +276,17 @@ data.forEach(testdata => {
             renameProperty('script', 'scriptPubKey', u)
           )
         )
-        const sigtype =
-          api.coin === 'btc'
-            ? crypto.Signature.SIGHASH_ALL
-            : crypto.Signature.SIGHASH_ALL | crypto.Signature.SIGHASH_FORKID
 
         const transaction = new Transaction()
           .from(utxos)
-          .to(address, amount)
+          .to(address, testdata.sendAmount || Transaction.DUST_AMOUNT)
           .change(address)
-          .sign(derived.privateKey, sigtype)
+          .fee(testdata.sendFee || Transaction.DUST_AMOUNT)
+          .sign(
+            derived.privateKey,
+            testdata.sigType ||
+              crypto.Signature.SIGHASH_ALL | crypto.Signature.SIGHASH_FORKID
+          )
 
         expect(transaction).toBeDefined()
         expect(transaction.isFullySigned()).toBe(true)
