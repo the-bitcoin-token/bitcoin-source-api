@@ -102,21 +102,21 @@ describe('insight', () => {
     expect(api).toBeDefined()
     expect(api.coin).toBe('btc')
     expect(api.network).toBe('mainnet')
-    expect((api: IInsightApi)).toBeDefined()
+    expect((api: IInsightApiBasic)).toBeDefined()
   })
   it('should create btc mainnet', () => {
     const api = Insight.create('btc', 'mainnet')
     expect(api).toBeDefined()
     expect(api.coin).toBe('btc')
     expect(api.network).toBe('mainnet')
-    expect((api: IInsightApi)).toBeDefined()
+    expect((api: IInsightApiBasic)).toBeDefined()
   })
   it('should create btc testnet', () => {
     const api = Insight.create('btc', 'testnet')
     expect(api).toBeDefined()
     expect(api.coin).toBe('btc')
     expect(api.network).toBe('testnet')
-    expect((api: IInsightApi)).toBeDefined()
+    expect((api: IInsightApiBasic)).toBeDefined()
   })
   it('should create btc with custom url', () => {
     const api = Insight.create(
@@ -128,6 +128,6 @@ describe('insight', () => {
     expect(api.coin).toBe('btc')
     expect(api.network).toBe('mainnet')
     expect(api.url).toBe('https://ireallyknowwhatiamdoing.ipromise.com')
-    expect((api: IInsightApi)).toBeDefined()
+    expect((api: IInsightApiBasic)).toBeDefined()
   })
 })

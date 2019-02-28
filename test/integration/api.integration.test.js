@@ -1,6 +1,6 @@
 // @flow
 
-import { Block, Mnemonic, Transaction, Address } from 'bitcoinsource'
+import { Block, Mnemonic, Transaction, Address, Signature  } from 'bitcoinsource'
 import Insight from '../../src'
 import data from './testdata'
 import { renameProperty } from '../../src/util'
@@ -275,12 +275,18 @@ data.forEach(testdata => {
             renameProperty('script', 'scriptPubKey', u)
           )
         )
+        const SIGHASH_ALL = 0x01
+        const SIGHASH_FORKID = 0x40
+        const sigtype =
+          api.coin === 'btc'
+            ? SIGHASH_ALL
+            : SIGHASH_ALL | SIGHASH_FORKID
 
         const transaction = new Transaction()
           .from(utxos)
           .to(address, amount)
           .change(address)
-          .sign(derived.privateKey)
+          .sign(derived.privateKey, sigtype)
 
         expect(transaction).toBeDefined()
         expect(transaction.isFullySigned()).toBe(true)
@@ -291,6 +297,7 @@ data.forEach(testdata => {
         const res = await api.sendTransaction(transaction)
         expect(res).toBeDefined()
         expect(res.txId).toBeDefined()
+        console.log(`Broadcasted ${api.coin} ${api.network}: ${res.txId}`)
       })
     })
   })
