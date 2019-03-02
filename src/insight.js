@@ -15,24 +15,23 @@ function configErrorMessage(coin: Coin, network: Network, url: string): string {
   return errorMessage
 }
 
-/**
- * Register known coins here to let the factory know how to create them
- */
+
+// Add coin classes here so the factory will know how to create an API for them
 const knownCoins = {
   bch: BchInsightApi,
   bsv: BsvInsightApi
 }
 
 /**
- * Constructs an Insight Api object for the user
- * if passed a known coin then create a concrete class of that type
- *  example: Insight.create({coin:'bch', network:'mainnet', url:'localhost'})
- * if passed known coin then we can find reasonable defaults for network and url
- *  example: Insight.create({coin:'bch'})
- * if unknonwn coin then config must be "valid" to give back a generic base type
- *  example: Insight.create({coin:'mycoin', network:'mainnet', url:'localhost'})
- * if config is not valid then error
- *  example: Insight.create({coin:'throwsErrorBecauseNoUrl'})
+ * The Insight class is a Factory that constructs an Insight Api object for the caller.
+ * If passed a known coin then it creates a concrete class of that type.
+ *  Example: Insight.create('bch', 'mainnet', 'http://localhost:3000')
+ * If passed known coin then we can find reasonable defaults for network and url
+ *  example: Insight.create('bch')
+ * If passed an unknonwn coin then caller must also pass a url to give back a generic API implementation
+ *  Example: Insight.create('mycoin', 'mainnet', 'http://localhost:3000')
+ * If passed an unknown coin then caller must also pass a url
+ *  Example: Insight.create('throwsErrorBecauseNoUrl')
  */
 export default class Insight {
   static create(coin: Coin, network?: Network, url?: string): IInsightApiBasic {
