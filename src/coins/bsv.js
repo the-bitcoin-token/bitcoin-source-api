@@ -9,16 +9,19 @@ import ApiInsightBase from '../apiinsightbase'
 
 const thiscoin: Coin = 'bsv'
 
-/**
- * Default BSV mainnet insight node url
- */
+// Default BSV mainnet insight node url
 export const BSV_BCHSVEXPLORER_MAINNET_URL = 'https://bchsvexplorer.com/api'
 
 /**
  * API for BSV Insight nodes
- * @param {string} url Insight API URL
  */
 export class BsvInsightApi extends ApiInsightBase {
+  /**
+  * Constructor for BSV Insight API
+  * @constructor
+  * @param {string} network mainnet or testnet
+  * @param {string} url Insight API URL
+  */
   constructor(network?: Network, url?: string) {
     if (network === 'testnet' && !url) {
       throw new Error(

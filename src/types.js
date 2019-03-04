@@ -21,12 +21,12 @@ export type Txo = {|
   spent: boolean
 |}
 
+/**
+ * Coins that have been tested with the API
+ */
 export type Coin = 'bch' | 'bsv' | 'btc' | 'ltc'
 
+/**
+ * Coin Networks
+ */
 export type Network = 'mainnet' | 'testnet'
-
-export type ApiConfiguration = {|
-  coin: Coin,
-  network?: Network,
-  url?: string
-|}
