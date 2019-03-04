@@ -104,8 +104,16 @@ should be present then Flow's cache is likely out of date. Run `npx flow stop`.
     -   [Parameters](#parameters-11)
 -   [BsvInsightApi](#bsvinsightapi)
     -   [Parameters](#parameters-12)
--   [ApiError](#apierror)
+-   [BTC_BITPAY_MAINNET_URL](#btc_bitpay_mainnet_url)
+-   [BTC_BITPAY_TESTNET_URL](#btc_bitpay_testnet_url)
+-   [BtcInsightApi](#btcinsightapi)
     -   [Parameters](#parameters-13)
+-   [LTC_LITECORE_MAINNET_URL](#ltc_litecore_mainnet_url)
+-   [LTC_LITECORE_TESTNET_URL](#ltc_litecore_testnet_url)
+-   [LtcInsightApi](#ltcinsightapi)
+    -   [Parameters](#parameters-14)
+-   [ApiError](#apierror)
+    -   [Parameters](#parameters-15)
 -   [Coin](#coin-1)
 -   [Network](#network-1)
 
@@ -323,6 +331,52 @@ API for BSV Insight nodes
 -   `network` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** mainnet or testnet
 -   `url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Insight API URL
 
+### BTC_BITPAY_MAINNET_URL
+
+Default BTC mainnet insight node url
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+### BTC_BITPAY_TESTNET_URL
+
+Default BTC testnet insight node url
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+### BtcInsightApi
+
+**Extends ApiInsight**
+
+API for BTC Insight nodes
+
+#### Parameters
+
+-   `network` **[Network](#network)** 
+-   `url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Insight API URL
+
+### LTC_LITECORE_MAINNET_URL
+
+Default LTC mainnet insight node url
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+### LTC_LITECORE_TESTNET_URL
+
+Default LTC testnet insight node url
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+### LtcInsightApi
+
+**Extends ApiInsight**
+
+API for LTC Insight nodes
+
+#### Parameters
+
+-   `network` **[Network](#network)** 
+-   `url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Insight API URL
+
 ### ApiError
 
 **Extends Error**
@@ -351,7 +405,7 @@ If passed an unknown coin then caller must also pass a url
 
 Coins that have been tested with the API
 
-Type: (`"bch"` \| `"bsv"`)
+Type: (`"bch"` \| `"bsv"` \| `"btc"` \| `"ltc"`)
 
 ### Network
 
