@@ -17,7 +17,6 @@ function configErrorMessage(coin: Coin, network: Network, url: string): string {
   return errorMessage
 }
 
-
 // Add coin classes here so the factory will know how to create an API for them
 const knownCoins = {
   bch: BchInsightApi,

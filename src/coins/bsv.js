@@ -17,11 +17,11 @@ export const BSV_BCHSVEXPLORER_MAINNET_URL = 'https://bchsvexplorer.com/api'
  */
 export class BsvInsightApi extends ApiInsightBase {
   /**
-  * Constructor for BSV Insight API
-  * @constructor
-  * @param {string} network mainnet or testnet
-  * @param {string} url Insight API URL
-  */
+   * Constructor for BSV Insight API
+   * @constructor
+   * @param {string} network mainnet or testnet
+   * @param {string} url Insight API URL
+   */
   constructor(network?: Network, url?: string) {
     if (network === 'testnet' && !url) {
       throw new Error(
