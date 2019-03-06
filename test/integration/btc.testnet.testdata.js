@@ -1,15 +1,16 @@
-import { isSendTransactionTest } from './util'
+import { crypto } from 'bitcoinsource'
+import { runAllTests } from './util'
 
 export default {
   name: 'BTC Testnet',
   apiconfig: {
     coin: 'btc',
-    network: 'testnet',
-    url: 'https://test-insight.bitpay.com/api'
+    network: 'testnet'
   },
-  runWhen: (api, testName) => !isSendTransactionTest(api, testName),
+  runWhen: runAllTests,
   mnemonic:
     'rail install size scorpion orchard kingdom vacuum collect pencil element fall enhance media island medal',
+  sigType: crypto.Signature.SIGHASH_ALL,
   testAddress: 'n3x7vJA1NcSV2oFJudWLp6pgB4D28wchVr',
   addressCountMinimum: 900,
   txId: 'ca706f430be4e072345eed8c4ef8be51a2fe281b1b56400fed282137ef36a625',

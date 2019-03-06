@@ -1,6 +1,8 @@
 // @flow
+/* eslint-disable no-bitwise */
+/* eslint-disable no-console */
 
-import { Block, Mnemonic, Transaction, Address } from 'bitcoinsource'
+import { Block, Mnemonic, Transaction, Address, crypto } from 'bitcoinsource'
 import Insight from '../../src'
 import data from './testdata'
 import { renameProperty } from '../../src/util'
@@ -267,7 +269,6 @@ data.forEach(testdata => {
         const hdPrivateKey = Mnemonic(testdata.mnemonic).toHDPrivateKey()
         const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
         const address = derived.publicKey.toAddress(testdata.apiconfig.network)
-        const amount = Transaction.DUST_AMOUNT
         const utxos = (await api.getUtxos(address)).map(u =>
           renameProperty(
             'vout',
@@ -278,9 +279,14 @@ data.forEach(testdata => {
 
         const transaction = new Transaction()
           .from(utxos)
-          .to(address, amount)
+          .to(address, testdata.sendAmount || Transaction.DUST_AMOUNT)
           .change(address)
-          .sign(derived.privateKey)
+          .fee(testdata.sendFee || Transaction.DUST_AMOUNT)
+          .sign(
+            derived.privateKey,
+            testdata.sigType ||
+              crypto.Signature.SIGHASH_ALL | crypto.Signature.SIGHASH_FORKID
+          )
 
         expect(transaction).toBeDefined()
         expect(transaction.isFullySigned()).toBe(true)
@@ -291,6 +297,7 @@ data.forEach(testdata => {
         const res = await api.sendTransaction(transaction)
         expect(res).toBeDefined()
         expect(res.txId).toBeDefined()
+        console.log(`Broadcasted ${api.coin} ${api.network}: ${res.txId}`)
       })
     })
   })

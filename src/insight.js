@@ -6,6 +6,8 @@ import ApiInsightBase from './apiinsightbase'
 import ApiInsight from './apiinsight'
 import { BsvInsightApi } from './coins/bsv'
 import { BchInsightApi } from './coins/bch'
+import { BtcInsightApi } from './coins/btc'
+import { LtcInsightApi } from './coins/ltc'
 
 function configErrorMessage(coin: Coin, network: Network, url: string): string {
   let errorMessage = ``
@@ -19,7 +21,9 @@ function configErrorMessage(coin: Coin, network: Network, url: string): string {
 // Add coin classes here so the factory will know how to create an API for them
 const knownCoins = {
   bch: BchInsightApi,
-  bsv: BsvInsightApi
+  bsv: BsvInsightApi,
+  btc: BtcInsightApi,
+  ltc: LtcInsightApi
 }
 
 /**

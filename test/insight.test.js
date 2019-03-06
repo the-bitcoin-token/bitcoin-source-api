@@ -96,4 +96,72 @@ describe('insight', () => {
     expect(bch.network).toBe('mainnet')
     expect(bch.url).toBe('https://ireallyknowwhatiamdoing.ipromise.com')
   })
+
+  it('should create btc default', () => {
+    const api = Insight.create('btc')
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('btc')
+    expect(api.network).toBe('mainnet')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
+  it('should create btc mainnet', () => {
+    const api = Insight.create('btc', 'mainnet')
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('btc')
+    expect(api.network).toBe('mainnet')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
+  it('should create btc testnet', () => {
+    const api = Insight.create('btc', 'testnet')
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('btc')
+    expect(api.network).toBe('testnet')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
+  it('should create btc with custom url', () => {
+    const api = Insight.create(
+      'btc',
+      undefined,
+      'https://ireallyknowwhatiamdoing.ipromise.com'
+    )
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('btc')
+    expect(api.network).toBe('mainnet')
+    expect(api.url).toBe('https://ireallyknowwhatiamdoing.ipromise.com')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
+
+  it('should create ltc default', () => {
+    const api = Insight.create('ltc')
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('ltc')
+    expect(api.network).toBe('mainnet')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
+  it('should create ltc mainnet', () => {
+    const api = Insight.create('ltc', 'mainnet')
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('ltc')
+    expect(api.network).toBe('mainnet')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
+  it('should create ltc testnet', () => {
+    const api = Insight.create('ltc', 'testnet')
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('ltc')
+    expect(api.network).toBe('testnet')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
+  it('should create ltc with custom url', () => {
+    const api = Insight.create(
+      'ltc',
+      undefined,
+      'https://ireallyknowwhatiamdoing.ipromise.com'
+    )
+    expect(api).toBeDefined()
+    expect(api.coin).toBe('ltc')
+    expect(api.network).toBe('mainnet')
+    expect(api.url).toBe('https://ireallyknowwhatiamdoing.ipromise.com')
+    expect((api: IInsightApiBasic)).toBeDefined()
+  })
 })
