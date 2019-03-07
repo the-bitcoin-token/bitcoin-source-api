@@ -17,25 +17,31 @@ Bitcoin Source API supports the following coins:
 
 An example of how to use the API is shown below.
 
-    const Insight = require('bitcoin-source-api').Insight
+```javascript
+    const Insight = require('bitcoin-source-api')
     const api = Insight.create('bch')
 
     ;(async () => {
         const blk = await api.getLastBlockHash()
         console.log(`Last block for ${api.coin} is ${blk}`)
     })()
+```
 
 The general syntax for creating an API is
 
+```javascript
     const api = Insight.create(coin, network, url)
+```
 
 where network and url are optional.  
 
 Here are more examples of creating an API.
 
+```javascript
     const api = Insight.create('bsv', 'mainnet')
 
     const api = Insight.create('ltc', 'testnet', 'https://localhost:3000/api')
+```
 
 ## Developer Installation
 
