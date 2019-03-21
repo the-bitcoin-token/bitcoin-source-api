@@ -6,6 +6,6 @@ script:
   - npm run lint
   - npm test -- --coverage
 cache:
-  - yarn
+  - npm
 after_success:
   - bash <(curl -s https://codecov.io/bash)
