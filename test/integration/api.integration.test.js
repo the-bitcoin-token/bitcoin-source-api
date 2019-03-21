@@ -297,7 +297,6 @@ data.forEach(testdata => {
         const res = await api.sendTransaction(transaction)
         expect(res).toBeDefined()
         expect(res.txId).toBeDefined()
-        console.log(`Broadcasted ${api.coin} ${api.network}: ${res.txId}`)
       })
     })
   })
