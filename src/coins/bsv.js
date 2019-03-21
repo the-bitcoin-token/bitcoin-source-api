@@ -24,9 +24,7 @@ export class BsvInsightApi extends ApiInsightBase {
    */
   constructor(network?: Network, url?: string) {
     if (network === 'testnet' && !url) {
-      throw new Error(
-        'There is no default api url for BSV testnet. Please provide a url'
-      )
+      throw new Error('There is no default api url for BSV testnet. Please provide a url')
     }
     const defaultNetwork: Network = network || 'mainnet'
     const defaultUrl: string = url || BSV_BCHSVEXPLORER_MAINNET_URL

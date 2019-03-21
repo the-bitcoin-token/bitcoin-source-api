@@ -43,11 +43,7 @@ describe('insight', () => {
     }).toThrow()
   })
   it('should create bsv with custom url', () => {
-    const bsv = Insight.create(
-      'bsv',
-      undefined,
-      'https://ireallyknowwhatiamdoing.ipromise.com'
-    )
+    const bsv = Insight.create('bsv', undefined, 'https://ireallyknowwhatiamdoing.ipromise.com')
     expect(bsv).toBeDefined()
     expect(bsv).toBeInstanceOf(ApiInsightBase)
     expect((bsv: IInsightApiBasic)).toBeDefined()
@@ -84,11 +80,7 @@ describe('insight', () => {
     expect(bch.url.length).toBeGreaterThan(0)
   })
   it('should create bch with custom url', () => {
-    const bch = Insight.create(
-      'bch',
-      undefined,
-      'https://ireallyknowwhatiamdoing.ipromise.com'
-    )
+    const bch = Insight.create('bch', undefined, 'https://ireallyknowwhatiamdoing.ipromise.com')
     expect(bch).toBeDefined()
     expect(bch).toBeInstanceOf(ApiInsight)
     expect((bch: IInsightApiBasic)).toBeDefined()
@@ -119,11 +111,7 @@ describe('insight', () => {
     expect((api: IInsightApiBasic)).toBeDefined()
   })
   it('should create btc with custom url', () => {
-    const api = Insight.create(
-      'btc',
-      undefined,
-      'https://ireallyknowwhatiamdoing.ipromise.com'
-    )
+    const api = Insight.create('btc', undefined, 'https://ireallyknowwhatiamdoing.ipromise.com')
     expect(api).toBeDefined()
     expect(api.coin).toBe('btc')
     expect(api.network).toBe('mainnet')
@@ -153,11 +141,7 @@ describe('insight', () => {
     expect((api: IInsightApiBasic)).toBeDefined()
   })
   it('should create ltc with custom url', () => {
-    const api = Insight.create(
-      'ltc',
-      undefined,
-      'https://ireallyknowwhatiamdoing.ipromise.com'
-    )
+    const api = Insight.create('ltc', undefined, 'https://ireallyknowwhatiamdoing.ipromise.com')
     expect(api).toBeDefined()
     expect(api.coin).toBe('ltc')
     expect(api.network).toBe('mainnet')

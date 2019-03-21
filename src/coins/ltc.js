@@ -23,9 +23,7 @@ export class LtcInsightApi extends ApiInsight {
   constructor(network?: Network, url?: string) {
     const defaultNetwork: Network = network || 'mainnet'
     const defaultUrl: string =
-      defaultNetwork === 'mainnet'
-        ? LTC_LITECORE_MAINNET_URL
-        : LTC_LITECORE_TESTNET_URL
+      defaultNetwork === 'mainnet' ? LTC_LITECORE_MAINNET_URL : LTC_LITECORE_TESTNET_URL
     super(thiscoin, network, url || defaultUrl)
   }
 }

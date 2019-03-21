@@ -97,9 +97,7 @@ export default class ApiInsightBase implements IInsightApiBasic {
   async getUtxos(address: Address): Promise<Array<Txo>> {
     const addressString = address.toString()
     const explorerUtxos = await this._get(`/addr/${addressString}/utxo`)
-    const utxos = explorerUtxos.map(utxo =>
-      renameProperty('txid', 'txId', utxo)
-    )
+    const utxos = explorerUtxos.map(utxo => renameProperty('txid', 'txId', utxo))
 
     // the insight api might return a list with duplicates we need to eliminate
     const deDuplicatedUtxso = removeDuplicates(utxos)
