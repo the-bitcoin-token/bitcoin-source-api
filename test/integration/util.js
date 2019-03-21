@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import ApiInsightBase from '../../src/apiinsightbase'
 import ApiInsight from '../../src/apiinsight'
 
