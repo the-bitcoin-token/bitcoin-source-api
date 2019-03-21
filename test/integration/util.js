@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-import { Address } from 'bitcoinsource'
-import { Insight } from '../../src'
 import ApiInsightBase from '../../src/apiinsightbase'
 import ApiInsight from '../../src/apiinsight'
 
