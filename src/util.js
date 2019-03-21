@@ -19,7 +19,8 @@ message\t${message}
 request\t${method} ${url}${requestData ? `\ndata\t${requestData}` : ''}`
 
     return new ApiError('Server error', details)
-  } else if (error.request) {
+  }
+  if (error.request) {
     return new ApiError('Communication error', 'Service unavailable')
   }
   return new ApiError('Request error', error.message)

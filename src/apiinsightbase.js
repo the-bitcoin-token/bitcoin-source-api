@@ -15,7 +15,9 @@ import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
  */
 export default class ApiInsightBase implements IInsightApiBasic {
   _url: string
+
   _coin: Coin
+
   _network: Network
 
   /**
