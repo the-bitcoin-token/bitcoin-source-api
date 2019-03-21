@@ -14,7 +14,15 @@
     "jest": true
   },
   "rules": {
+    "flowtype-errors/show-errors": "error",
+    "lines-between-class-members": "off",
     "no-else-return": "off",
-    "flowtype-errors/show-errors": "error"
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-underscore-dangle": "off"
   }
 }
