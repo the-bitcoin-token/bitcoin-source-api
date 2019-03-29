@@ -1,7 +1,9 @@
+# OS and editor files
 .DS_Store
+*.swp
+
+# Node dependencies
 node_modules
-coverage
+
+# Output directories
 dist
-*.log
-src/temp
-test/temp

@@ -37,5 +37,5 @@
     "with"
   ],
   "workbench.editor.closeEmptyGroups": false,
-  "editor.renderLineHighlight": "all",
+  "editor.renderLineHighlight": "all"
 }
