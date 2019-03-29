@@ -23,10 +23,7 @@ export const isSendTransactionTest = (api, testName) => {
  */
 export const isBigBlockTest = (api, testName) => {
   if (api instanceof ApiInsight) return false
-  if (
-    api instanceof ApiInsightBase &&
-    (testName === 'getBlock' || testName === 'getRawBlock')
-  ) {
+  if (api instanceof ApiInsightBase && (testName === 'getBlock' || testName === 'getRawBlock')) {
     return true
   }
   return false

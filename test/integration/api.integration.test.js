@@ -16,9 +16,7 @@ data.forEach(testdata => {
   )
 
   const ifRunTest = (testName, func) =>
-    testdata.runWhen(api, testName)
-      ? describe(testName, func)
-      : describe.skip(testName, func)
+    testdata.runWhen(api, testName) ? describe(testName, func) : describe.skip(testName, func)
 
   describe(testdata.name, () => {
     describe('testing testdata', () => {
@@ -49,9 +47,7 @@ data.forEach(testdata => {
         expect(res.unconfirmedTxApperances).toBeDefined()
         expect(res.txApperances).toBeDefined()
         expect(res.transactions).toBeDefined()
-        expect(res.transactions.length).toBeGreaterThanOrEqual(
-          testdata.addressCountMinimum
-        )
+        expect(res.transactions.length).toBeGreaterThanOrEqual(testdata.addressCountMinimum)
       }, 9000)
     })
 
@@ -258,9 +254,7 @@ data.forEach(testdata => {
         expect(res.amount).toBe(testdata.txOutput.amount)
         expect(res.satoshis).toBe(testdata.txOutput.satoshis)
         expect(res.height).toBe(testdata.txOutput.height)
-        expect(res.confirmations).toBeGreaterThan(
-          testdata.txOutput.confirmations
-        )
+        expect(res.confirmations).toBeGreaterThan(testdata.txOutput.confirmations)
       })
     })
 
@@ -270,11 +264,7 @@ data.forEach(testdata => {
         const derived = hdPrivateKey.derive("m/44'/0'/0'/1/0")
         const address = derived.publicKey.toAddress(testdata.apiconfig.network)
         const utxos = (await api.getUtxos(address)).map(u =>
-          renameProperty(
-            'vout',
-            'outputIndex',
-            renameProperty('script', 'scriptPubKey', u)
-          )
+          renameProperty('vout', 'outputIndex', renameProperty('script', 'scriptPubKey', u))
         )
 
         const transaction = new Transaction()
@@ -284,8 +274,7 @@ data.forEach(testdata => {
           .fee(testdata.sendFee || Transaction.DUST_AMOUNT)
           .sign(
             derived.privateKey,
-            testdata.sigType ||
-              crypto.Signature.SIGHASH_ALL | crypto.Signature.SIGHASH_FORKID
+            testdata.sigType || crypto.Signature.SIGHASH_ALL | crypto.Signature.SIGHASH_FORKID
           )
 
         expect(transaction).toBeDefined()

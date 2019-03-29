@@ -23,9 +23,7 @@ export class BtcInsightApi extends ApiInsight {
   constructor(network?: Network, url?: string) {
     const defaultNetwork: Network = network || 'mainnet'
     const defaultUrl: string =
-      defaultNetwork === 'mainnet'
-        ? BTC_BITPAY_MAINNET_URL
-        : BTC_BITPAY_TESTNET_URL
+      defaultNetwork === 'mainnet' ? BTC_BITPAY_MAINNET_URL : BTC_BITPAY_TESTNET_URL
     super(thiscoin, network, url || defaultUrl)
   }
 }

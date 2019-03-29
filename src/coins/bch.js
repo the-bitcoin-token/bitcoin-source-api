@@ -31,9 +31,7 @@ export class BchInsightApi extends ApiInsight {
   constructor(network?: Network, url?: string) {
     const defaultNetwork: Network = network || 'mainnet'
     const defaultUrl: string =
-      defaultNetwork === 'mainnet'
-        ? BCH_BLOCKDOZER_MAINNET_URL
-        : BCH_BLOCKDOZER_TESTNET_URL
+      defaultNetwork === 'mainnet' ? BCH_BLOCKDOZER_MAINNET_URL : BCH_BLOCKDOZER_TESTNET_URL
     super(thiscoin, network, url || defaultUrl)
   }
 }

@@ -10,8 +10,7 @@ export function axiosToApiError(error: Object) {
       url: 'unknown'
     }
     const requestData = (error.response.config || {}).data || ''
-    const message =
-      data.error || (data.indexOf('Code:') !== -1 ? data : statusText)
+    const message = data.error || (data.indexOf('Code:') !== -1 ? data : statusText)
 
     const details = `status\t${status} ${statusText}
 headers\t${JSON.stringify(headers)}
@@ -32,9 +31,7 @@ request\t${method} ${url}${requestData ? `\ndata\t${requestData}` : ''}`
  * @throws {ApiError}
  * @ignore
  */
-export const unwrapAxiosResponse = async (
-  request: Promise<any>
-): Promise<any> => {
+export const unwrapAxiosResponse = async (request: Promise<any>): Promise<any> => {
   try {
     const response = await request
     return response.data
@@ -67,6 +64,5 @@ export function renameProperty(
  */
 export const removeDuplicates = (array: Array<any>): Array<any> =>
   array.filter(
-    (el, index, self) =>
-      self.findIndex(t => t.txId === el.txId && t.vout === el.vout) === index
+    (el, index, self) => self.findIndex(t => t.txId === el.txId && t.vout === el.vout) === index
   )
