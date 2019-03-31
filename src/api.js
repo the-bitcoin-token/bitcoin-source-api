@@ -1,7 +1,10 @@
 // @flow
 
-import type { Address, Transaction } from 'bitcoin-source'
-import type { OutputId, Txo, TransactionId, Coin, Network } from './types'
+import type { Address } from 'bitcoin-source'
+import { Transaction } from 'bitcoin-source'
+import type { Txo, TransactionId, Coin, Network } from './types'
+
+const { OutputId } = Transaction
 
 /**
  * REST API interface that all supported chains must implement.

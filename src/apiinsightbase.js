@@ -4,11 +4,15 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 import axios from 'axios'
-import type { Address, Transaction } from 'bitcoin-source'
+import Bitcoin from 'bitcoin-source'
+import type { Address } from 'bitcoin-source'
 import type { IInsightApi, IInsightApiBasic } from './api'
 import ApiError from './error'
-import type { Coin, Network, OutputId, TransactionId, Txo } from './types'
+import type { Coin, Network, TransactionId, Txo } from './types'
 import { removeDuplicates, renameProperty, unwrapAxiosResponse } from './util'
+
+const { Transaction } = Bitcoin
+const { OutputId } = Transaction
 
 /**
  * Base class for implementing Api
