@@ -1,4 +1,4 @@
-// flow-typed signature: 9b251f42659f4811bcc8c1b46e6d180d
+// flow-typed signature: f04c08db591d6d3004c874212fe50dc2
 // flow-typed version: <<STUB>>/bitcoin-source_vfile:../bitcoin-source/flow_v0.95.1
 
 /**
@@ -130,10 +130,6 @@ declare module 'bitcoin-source/flow-typed/npm/flow-bin_v0.x.x' {
   declare module.exports: any;
 }
 
-declare module 'bitcoin-source/flow-typed/npm/flow-copy-source_vx.x.x' {
-  declare module.exports: any;
-}
-
 declare module 'bitcoin-source/flow-typed/npm/flow-typed_vx.x.x' {
   declare module.exports: any;
 }
@@ -207,10 +203,6 @@ declare module 'bitcoin-source/flow-typed/npm/rollup-plugin-terser_vx.x.x' {
 }
 
 declare module 'bitcoin-source/flow-typed/npm/sinon_vx.x.x' {
-  declare module.exports: any;
-}
-
-declare module 'bitcoin-source/flow-typed/npm/uglify-js_vx.x.x' {
   declare module.exports: any;
 }
 
@@ -712,9 +704,6 @@ declare module 'bitcoin-source/flow-typed/npm/eslint-plugin-prettier_vx.x.x.js' 
 declare module 'bitcoin-source/flow-typed/npm/flow-bin_v0.x.x.js' {
   declare module.exports: $Exports<'bitcoin-source/flow-typed/npm/flow-bin_v0.x.x'>;
 }
-declare module 'bitcoin-source/flow-typed/npm/flow-copy-source_vx.x.x.js' {
-  declare module.exports: $Exports<'bitcoin-source/flow-typed/npm/flow-copy-source_vx.x.x'>;
-}
 declare module 'bitcoin-source/flow-typed/npm/flow-typed_vx.x.x.js' {
   declare module.exports: $Exports<'bitcoin-source/flow-typed/npm/flow-typed_vx.x.x'>;
 }
@@ -771,9 +760,6 @@ declare module 'bitcoin-source/flow-typed/npm/rollup-plugin-terser_vx.x.x.js' {
 }
 declare module 'bitcoin-source/flow-typed/npm/sinon_vx.x.x.js' {
   declare module.exports: $Exports<'bitcoin-source/flow-typed/npm/sinon_vx.x.x'>;
-}
-declare module 'bitcoin-source/flow-typed/npm/uglify-js_vx.x.x.js' {
-  declare module.exports: $Exports<'bitcoin-source/flow-typed/npm/uglify-js_vx.x.x'>;
 }
 declare module 'bitcoin-source/flow-typed/npm/unorm_vx.x.x.js' {
   declare module.exports: $Exports<'bitcoin-source/flow-typed/npm/unorm_vx.x.x'>;

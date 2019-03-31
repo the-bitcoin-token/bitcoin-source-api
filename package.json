@@ -23,34 +23,17 @@
     "singleQuote": true
   },
   "scripts": {
+    "build": "rollup -c",
     "test": "jest",
-    "testIntegration": "jest './test/integration/'",
-    "testLintFlow": "eslint src test && flow check && jest",
-    "coverage": "npm test -- --coverage",
-    "postcoverage": "opn coverage/lcov-report/index.html",
+    "test:integration": "jest './test/integration/'",
     "lint": "eslint src test",
-    "fixLint": "eslint src test --fix",
+    "lint:fix": "eslint src test --fix",
     "flow": "flow check",
     "docs": "documentation readme src --section=API",
-    "clean": "rimraf dist",
-    "babel": "node_modules/.bin/babel src --out-dir dist/babel",
-    "webpack": "node_modules/.bin/webpack-cli",
-    "rollup": "rollup -c",
-    "flowbuild": "flow-copy-source src dist",
-    "prebuild": "npm run docs && npm run clean && npm run flowbuild",
-    "build": "babel src -d dist && rollup -c",
-    "watch": "npm-watch",
-    "patch": "npm version patch && npm publish",
-    "minor": "npm version minor && npm publish",
-    "major": "npm version major && npm publish",
-    "prepublishOnly": "npm run lint && npm test && npm run build",
-    "postpublish": "git push origin master --follow-tags",
-    "reinstall": "rm -rf node_modules && npm install"
-  },
-  "watch": {
-    "test": "{src,test}/*.js",
-    "lint": "{src,test}/*.js",
-    "build": "src"
+    "preversion": "npm test",
+    "version": "npm run build && npm run readme && git add -A dist README.md",
+    "postversion": "git push && git push --tags && npm publish",
+    "bump": "npm version patch -m 'Bump version to %s.'"
   },
   "jest": {
     "testEnvironment": "node"
@@ -66,16 +49,13 @@
     "bitcoin-source": "file:../bitcoin-source"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
-    "@babel/polyfill": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-flow": "^7.0.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.5",
-    "babel-plugin-minify-mangle-names": "^0.5.0",
     "babel-preset-minify": "^0.5.0",
     "documentation": "^9.3.1",
     "eslint": "^5.15.3",
@@ -90,9 +70,7 @@
     "flow-typed": "^2.5.1",
     "jest": "^24.5.0",
     "jest-cli": "^24.5.0",
-    "npm-watch": "^0.6.0",
     "prettier": "^1.16.4",
-    "rimraf": "^2.6.3",
     "rollup": "^1.7.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.1",
