@@ -1,4 +1,4 @@
-import { crypto } from 'bitcoinsource'
+import { crypto } from 'bitcoin-source'
 import { runAllTests } from './util'
 
 export default {
