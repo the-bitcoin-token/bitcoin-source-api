@@ -17,7 +17,7 @@ Bitcoin Source API supports the following coins:
 
 An example of how to use the API is shown below.
 
-    const Insight = require('bitcoin-source-api').Insight
+    const Insight = require('bitcoin-source-api')
     const api = Insight.create('bch')
 
     ;(async () => {
