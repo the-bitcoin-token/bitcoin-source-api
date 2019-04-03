@@ -1,7 +1,7 @@
 // @flow
 
-import type { Address } from 'bitcoin-source'
-import { Transaction } from 'bitcoin-source'
+import type { Address } from 'bitcoinsource'
+import { Transaction } from 'bitcoinsource'
 import type { Txo, TransactionId, Coin, Network } from './types'
 
 const { OutputId } = Transaction

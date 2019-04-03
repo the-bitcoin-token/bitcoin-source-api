@@ -4,8 +4,8 @@
 /* eslint no-else-return: ["error", { "allowElseIf": true }] */
 /* eslint no-param-reassign: "off" */
 import axios from 'axios'
-import Bitcoin from 'bitcoin-source'
-import type { Address } from 'bitcoin-source'
+import Bitcoin from 'bitcoinsource'
+import type { Address } from 'bitcoinsource'
 import type { IInsightApi, IInsightApiBasic } from './api'
 import ApiError from './error'
 import type { Coin, Network, TransactionId, Txo } from './types'

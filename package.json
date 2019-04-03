@@ -63,7 +63,7 @@
   ],
   "dependencies": {
     "axios": "^0.18.0",
-    "bitcoin-source": "file:../bitcoin-source"
+    "bitcoinsource": "^0.1.16"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
