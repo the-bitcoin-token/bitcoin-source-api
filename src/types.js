@@ -1,10 +1,5 @@
 // @flow
 
-export type OutputId = {|
-  txId: string,
-  outputIndex: number
-|}
-
 export type TransactionId = {|
   txId: string
 |}
