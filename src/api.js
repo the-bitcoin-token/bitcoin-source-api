@@ -1,6 +1,6 @@
 // @flow
 
-import type { Address, Transaction } from 'bitcoin-source'
+import type { Address, Transaction } from 'bitcoinsource'
 import type { OutputId, Txo, TransactionId, Coin, Network } from './types'
 
 /**
