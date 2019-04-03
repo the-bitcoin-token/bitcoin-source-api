@@ -30,7 +30,8 @@
     "lint:fix": "eslint src test --fix",
     "flow": "flow check",
     "docs": "documentation readme src --section=API",
-    "preversion": "npm test",
+    "clean": "rm -rf dist",
+    "preversion": "npm run clean && npm test",
     "version": "npm run build && npm run readme && git add -A dist README.md",
     "postversion": "git push && git push --tags && npm publish",
     "bump": "npm version patch -m 'Bump version to %s.'"
