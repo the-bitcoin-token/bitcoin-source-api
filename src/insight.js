@@ -1,7 +1,7 @@
 // @flow
 
 import type { Coin, Network } from './types'
-import { IInsightApiBasic } from './api'
+import type { IInsightApiBasic } from './api'
 import ApiInsightBase from './apiinsightbase'
 import ApiInsight from './apiinsight'
 import { BsvInsightApi } from './coins/bsv'
