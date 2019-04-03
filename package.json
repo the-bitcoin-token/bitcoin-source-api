@@ -32,7 +32,7 @@
     "docs": "documentation readme src --section=API",
     "clean": "rm -rf dist",
     "preversion": "npm run clean && npm run lint && npm run flow && npm test",
-    "version": "npm run build && npm run docs && git add -A dist README.md",
+    "version": "npm run build && npm run docs && git add -A README.md",
     "postversion": "git push && git push --tags && npm publish",
     "bump": "npm version patch -m 'Bump version to %s.'"
   },
