@@ -4,7 +4,7 @@ Bitcoin Source API provides a simplified programming model to access public REST
 
 Bitcoin Source API supports the following coins:
 
--   Bitcoin Cash (BTC)
+-   Bitcoin Cash (BCH)
 -   Bitcoin SV (BSV)
 -   Bitcoin (BTC)
 -   Litecoin (LTC)
